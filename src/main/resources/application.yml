@@ -1,0 +1,32 @@
+
+spring:
+  profiles:
+    active: dev # 配置文件切换
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+  mvc:
+    favicon:
+      enabled: true
+  jackson:
+    serialization: true
+
+# 服务器配置
+server:
+  port: 8889
+  session:
+    timeout: 3000
+  context-path: /myth
+
+
+# HTTPS 配置
+#server:
+#  context-path: /myth
+#  ssl:
+#    key-store: classpath:static/keystore.p12
+#    key-store-password: demo1429336
+#    key-store-type: PKCS12
+#    key-alias: tomcat
