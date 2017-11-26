@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by https://github.com/kuangcp on 17-8-28  上午11:41
- * 测试Springboot跑起来
+ * 测试SpringBoot跑起来
  */
 @RestController
 public class Hi {
