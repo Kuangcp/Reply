@@ -15,9 +15,9 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-public class Group implements Serializable{
+public class Class implements Serializable{
     @Id
-    private long groupId;
+    private long classId;
     private String name;
 
     @ManyToOne

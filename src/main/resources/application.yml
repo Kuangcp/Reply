@@ -22,6 +22,11 @@ server:
   context-path: /myth
 
 
+
+reply:
+  main:
+    name: myth
+    url: ui""dfso
 # HTTPS 配置
 #server:
 #  context-path: /myth

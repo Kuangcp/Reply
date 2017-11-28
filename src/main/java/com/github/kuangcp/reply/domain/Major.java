@@ -24,6 +24,7 @@ public class Major implements Serializable{
 
     @OneToMany
     @JoinColumn(name = "majorId")
-    private Set<Group> groupSet;
+    private Set<Class> groupSet;
+
 
 }

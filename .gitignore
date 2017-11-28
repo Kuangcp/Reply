@@ -23,6 +23,7 @@ dist/
 nbdist/
 .nb-gradle/
 
+*.log
 *.jpg
 *.gif
 *.png
