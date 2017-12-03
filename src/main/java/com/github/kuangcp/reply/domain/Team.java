@@ -4,11 +4,13 @@ import lombok.Data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
  * Created by https://github.com/kuangcp on 17-11-26  下午9:27
- *
+ * 团队
  * @author kuangcp
  */
 @Data
@@ -18,5 +20,11 @@ public class Team implements Serializable{
     @Id
     private long teamId;
     private String name;
-    private String year;
+    private String field;//研究领域
+//    private String year;
+    private long leader;//负责人
+
+    @ManyToOne
+    @JoinColumn(name = "majorId")
+    private Major majorId;
 }

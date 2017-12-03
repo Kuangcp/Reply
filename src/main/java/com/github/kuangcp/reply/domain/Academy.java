@@ -24,4 +24,6 @@ public class Academy implements Serializable {
     @OneToMany
     @JoinColumn(name = "academyId")
     private Set<Major> majorSet;
+
+
 }
