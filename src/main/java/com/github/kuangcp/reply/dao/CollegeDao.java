@@ -1,6 +1,6 @@
 package com.github.kuangcp.reply.dao;
 
-import com.github.kuangcp.reply.domain.Academy;
+import com.github.kuangcp.reply.domain.College;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author kuangcp
  */
-public interface AcademyDao extends JpaRepository<Academy, Long>{
+public interface CollegeDao extends JpaRepository<College, Long>{
 }

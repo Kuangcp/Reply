@@ -21,8 +21,8 @@ public class DefenseScoreRule implements Serializable{
     private int score;// 最大分值
 
     @ManyToOne
-    @JoinColumn(name = "academyId")
-    private Academy academyId;//所属学院
+    @JoinColumn(name = "collegeId")
+    private College collegeId;//所属学院
 
 
 }

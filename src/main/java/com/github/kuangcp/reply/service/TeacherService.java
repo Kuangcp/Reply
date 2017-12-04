@@ -23,7 +23,9 @@ public class TeacherService {
     public Topic saveTopic(Topic topic, long teacherId){
         topic.setGuideId(new Teacher(teacherId));
         topic.setPublishYear(Calendar.getInstance().get(Calendar.YEAR));
-        topic.setStudentId(new Student(0L));
+        topic.setStudentId(new Student(1L));
         return topicDao.save(topic);
     }
+
+
 }

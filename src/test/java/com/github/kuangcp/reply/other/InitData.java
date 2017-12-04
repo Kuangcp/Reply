@@ -23,7 +23,7 @@ public class InitData {
     @Autowired
     StudentDao studentDao;
     @Autowired
-    AcademyDao academyDao;
+    CollegeDao collegeDao;
     @Autowired
     MajorDao majorDao;
     @Autowired
@@ -34,13 +34,13 @@ public class InitData {
     @Test
     public void init(){
 
-        Academy academy = new Academy();
+        College academy = new College();
         academy.setName("test1");
-        academyDao.save(academy);
+        collegeDao.save(academy);
 
         Major major = new Major();
         major.setName("test1");
-        major.setAcademyId(academy);
+        major.setCollegeId(academy);
         majorDao.save(major);
 
         Team team = new Team();

@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * Created by https://github.com/kuangcp on 17-11-26  下午9:27
@@ -20,12 +19,12 @@ public class Major implements Serializable{
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "academyId")
-    private Academy academyId;
+    @JoinColumn(name = "collegeId")
+    private College collegeId;
 
-    @OneToMany
-    @JoinColumn(name = "majorId")
-    private Set<Class> classSet;
+//    @OneToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "majorId")
+//    private Set<Class> classSet;
 
 
 }

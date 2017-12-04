@@ -36,6 +36,10 @@ public class Teacher implements Serializable{
     @JoinColumn(name = "teamId")
     private Team teamId;
 
+//    @OneToMany
+//    @JoinColumn(name = "guideId")
+//    private Set<Topic> topicSet;
+
     public Teacher(long teacherId){
         this.teacherId = teacherId;
     }
