@@ -1,11 +1,10 @@
 package com.github.kuangcp.reply.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -16,8 +15,11 @@ import java.io.Serializable;
  */
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Teacher implements Serializable{
     @Id
+    @GeneratedValue
     private long teacherId;
     private String name;
     private String password;
@@ -33,4 +35,8 @@ public class Teacher implements Serializable{
     @ManyToOne
     @JoinColumn(name = "teamId")
     private Team teamId;
+
+    public Teacher(long teacherId){
+        this.teacherId = teacherId;
+    }
 }

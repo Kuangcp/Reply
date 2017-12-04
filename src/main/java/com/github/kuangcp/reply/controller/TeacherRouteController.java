@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by https://github.com/kuangcp on 17-10-10  上午9:07
+ * 仅仅负责模板的跳转
  */
 @Controller
 @RequestMapping("/teacher")
@@ -14,17 +15,17 @@ public class TeacherRouteController {
     public String teacher(){
         return "teacher/teacher";
     }
-    @RequestMapping("/PublishMajor")
+    @RequestMapping("/PublishTopic")
     public String push(){
-        return "teacher/PublishMajor";
+        return "teacher/PublishTopic";
     }
     @RequestMapping("/init")
     public String init(){
         return "teacher/init";
     }
-    @RequestMapping("/DealMajor")
+    @RequestMapping("/DealTopic")
     public String deal(){
-        return "teacher/DealMajor";
+        return "teacher/DealTopic";
     }
     @RequestMapping("/ThesisProposal")
     public String ThesisProposal(){

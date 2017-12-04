@@ -2,10 +2,7 @@ package com.github.kuangcp.reply.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,10 +15,12 @@ import java.io.Serializable;
 public class Team implements Serializable{
 
     @Id
+    @GeneratedValue
     private long teamId;
     private String name;
     private String field;//研究领域
 //    private String year;
+    // TODO 需不需要
     private long leader;//负责人
 
     @ManyToOne

@@ -2,10 +2,7 @@ package com.github.kuangcp.reply.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,13 +15,14 @@ import java.io.Serializable;
 public class ThesisProposal implements Serializable{
 
     @Id
+    @GeneratedValue
     private long proposalId;
     @ManyToOne
     @JoinColumn(name = "topicId")
     private Topic topicId;
     @ManyToOne
     @JoinColumn(name = "studentId")
-    private Student studentId;//冗余字段，方便查询
+    private Student studentId;//冗余字段，方便查询 课题中就包含了
 
     private String submitDate;//提交日期
     private String comment; // 学生提交

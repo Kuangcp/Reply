@@ -2,27 +2,25 @@ package com.github.kuangcp.reply.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by https://github.com/kuangcp on 17-11-26  下午9:27
- *
+ * 课题 将学生放在课题表中
  * @author kuangcp
  */
 @Data
 @Entity
 public class Topic implements Serializable {
     @Id
+    @GeneratedValue
     private long topicId;
     private String name;
-    private String limit;//论文要求
-    private int year;//出题年份
+    private String attention;//论文要求
+    private int publishYear;//出题年份
 
-    private int Checked;//是否审核通过 1 0
+    private int checked;//是否审核通过 1 0
     private String checkAdvise;// 审核意见
 
     @ManyToOne

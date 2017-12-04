@@ -8,13 +8,14 @@ import java.util.Set;
 
 /**
  * Created by https://github.com/kuangcp on 17-11-26  下午9:27
- *
+ * 专业
  * @author kuangcp
  */
 @Data
 @Entity
 public class Major implements Serializable{
     @Id
+    @GeneratedValue
     private long majorId;
     private String name;
 

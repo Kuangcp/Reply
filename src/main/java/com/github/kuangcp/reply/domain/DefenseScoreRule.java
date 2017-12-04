@@ -2,10 +2,7 @@ package com.github.kuangcp.reply.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -17,9 +14,10 @@ import java.io.Serializable;
 @Entity
 public class DefenseScoreRule implements Serializable{
     @Id
+    @GeneratedValue
     private long ruleId;
     private String title;
-    private String detail;
+    private String detail;//评分细则
     private int score;// 最大分值
 
     @ManyToOne

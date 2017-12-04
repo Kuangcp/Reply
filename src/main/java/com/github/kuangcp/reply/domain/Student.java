@@ -1,9 +1,10 @@
 package com.github.kuangcp.reply.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -14,12 +15,23 @@ import java.io.Serializable;
  */
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student implements Serializable{
     @Id
+    @GeneratedValue
     private long studentId;
     private String name;
     private String identifier;//学号，账号
     private String password;
     private String email;
+    private int year;//届
 
+    @ManyToOne
+    @JoinColumn(name = "classId")
+    private Class classId;
+
+    public Student(long studentId){
+        this.studentId = studentId;
+    }
 }
