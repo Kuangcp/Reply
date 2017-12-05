@@ -12,3 +12,28 @@ function alertError() {
         })
     }
 }
+
+function login(name, type) {
+    layer.open({
+        type: 1,
+        title: ''+name,
+        shade: 0,
+        closeBtn: 0,
+        moveOut: true,
+        resize: false,
+        content: '<form class="form-signin" action="/myth/signin/'+type+'" method="post">\n' +
+        // '        <h2 class="form-signin-heading" onclick="login()">Please sign in</h2>\n' +
+        // '        <label for="inputEmail" class="sr-only">Email address</label>\n' +
+        '        <input type="text" name="name" class="form-control" placeholder="用户名/id" required="required" autofocus="autofocus" />\n' +
+        // '        <label for="inputPassword" class="sr-only">Password</label>\n' +
+        '        <input type="password" name="password" class="form-control" placeholder="密码" required="required" />\n' +
+        // '        <div class="checkbox">\n' +
+        // '            <label>\n' +
+        // '                <input type="checkbox" value="remember-me" />\n' +
+        // '                 Remember me\n' +
+        // '            </label>\n' +
+        // '        </div>\n' +
+        '        <button class="btn btn-lg btn-primary" type="submit" style="margin-left: 33%;">登录</button>\n' +
+        '    </form>' //这里content是一个普通的String
+    });
+}

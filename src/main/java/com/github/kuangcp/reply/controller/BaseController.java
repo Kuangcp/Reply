@@ -49,17 +49,17 @@ public class BaseController {
         try {
             id = Long.parseLong(name);
         } catch (Exception e) {
-            return "/login";
+            return "redirect:/"+type+"/login?error=true";
         }
         String username;
         if (mainConfig.loginTypeTea.equals(type)) {
             username = teacherService.login(id, password);
             if (!mainConfig.loginFail.equals(username)) {
-                session.setAttribute("adminId", id);
-                session.setAttribute("adminName", username);
+                session.setAttribute("teacherId", id);
+                session.setAttribute("teacherName", username);
                 return "redirect:/teacher";
             }else {
-                return "redirect:/teacher/login";
+                return "redirect:/teacher/login?error=true";
             }
         } else if (mainConfig.loginTypeStu.equals(type)) {
             username = studentService.login(id, password);
@@ -68,7 +68,7 @@ public class BaseController {
                 session.setAttribute("studentName", username);
                 return "redirect:/student";
             }else {
-                return "redirect:/student/login";
+                return "redirect:/student/login?error=true";
             }
         } else if (mainConfig.loginTypeAdmin.equals(type)) {
             username = adminService.login(id, password);

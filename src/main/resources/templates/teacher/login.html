@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <title>Signin</title>
+    <title>登录教师系统</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/css/signin.css}" rel="stylesheet"/>
@@ -13,28 +13,14 @@
     <script th:src="@{/layer/lay/modules/layer.js}"></script>
     <script th:src="@{/js/common/login.js}"></script>
     <script>
-        // layer.msg('hello');
-        layer.open({
-            type: 1,
-            title: '登录教师系统',
-            content: '<form class="form-signin" th:action="@{/signin/teacher}" method="post">\n' +
-            // '        <h2 class="form-signin-heading" onclick="login()">Please sign in</h2>\n' +
-            // '        <label for="inputEmail" class="sr-only">Email address</label>\n' +
-            '        <input type="text" name="name" class="form-control" placeholder="用户名/id" required="required" autofocus="autofocus" />\n' +
-            // '        <label for="inputPassword" class="sr-only">Password</label>\n' +
-            '        <input type="password" name="password" class="form-control" placeholder="密码" required="required" />\n' +
-            // '        <div class="checkbox">\n' +
-            // '            <label>\n' +
-            // '                <input type="checkbox" value="remember-me" />\n' +
-            // '                 Remember me\n' +
-            // '            </label>\n' +
-            // '        </div>\n' +
-            '        <button class="btn btn-lg btn-primary" type="submit" style="margin-left: 33%;">登录</button>\n' +
-            '    </form>' //这里content是一个普通的String
-        });
-
+        login("登录教师系统", "teacher");
         alertError()
     </script>
+    <style>
+        body {
+            background-image: url("/myth/images/5710000203.jpg");
+        }
+    </style>
 </head>
 
 <body>

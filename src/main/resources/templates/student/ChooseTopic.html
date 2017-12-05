@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>选课题</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
 </head>
 <body>
+<th:block th:if="${#lists.size(topicList) == 0}" >
+    <div style="font-size: 18px; margin: 100px 0 0 20%;">
+        没有保存的课题，请到发布页面进行编辑发布<br/><a href="PublishTopic.html"><button class="btn btn-primary">点击前往</button></a>
+    </div>
+</th:block>
 
+<script th:src="@{/layer/layui.js}" charset="utf-8"></script>
+<script>
+    layui.use(['element', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer;
+
+        //监听折叠
+//         element.on('collapse(test)', function(data){
+// //            layer.msg('展开状态：'+ data.show);
+//         });
+    });
+    function editStudent() {
+        layer.open({
+            type: 1,
+            title: '更换学生',
+            content: '<form><input name="studentId"/></form>'
+        })
+    }
+    function deleteTopic(topicId) {
+        layer.confirm('确实要删除课题吗？', {
+            btn: ['取消', '确认'] //可以无限个按钮
+            ,btn2: function(index, layero){
+                $.get('/myth/teacher/del/topic/'+topicId, function (data) {
+                    console.log(data)
+                    window.location.reload(true)
+                })
+                return 0
+            }
+        }, function(index){
+            return 0
+        });
+    }
+</script>
 </body>
 </html>

@@ -1,39 +1,47 @@
 package com.github.kuangcp.reply.config;
 
+import com.github.kuangcp.reply.controller.interceptor.AdminInterceptor;
 import com.github.kuangcp.reply.controller.interceptor.MythInterceptor;
+import com.github.kuangcp.reply.controller.interceptor.StudentInterceptor;
+import com.github.kuangcp.reply.controller.interceptor.TeacherInterceptor;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Created by Myth on 2017/4/23
- * 增加页面的ViewController
+ * MVC 配置
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/ws").setViewName("ws");
-        registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/chat").setViewName("chat");
-//        super.addViewControllers(registry);
-    }
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/ws").setViewName("ws");
+//        registry.addViewController("/login").setViewName("login");
+//        registry.addViewController("/chat").setViewName("chat");
+//    }
 
     //自定义拦截器bean
     @Bean
-    public MythInterceptor mythInterceptor(){
-        return new MythInterceptor();
-    }
+    public MythInterceptor mythInterceptor(){return new MythInterceptor();}
+    @Bean
+    public AdminInterceptor adminInterceptor(){return new AdminInterceptor();}
+    @Bean
+    public TeacherInterceptor teacherInterceptor(){return new TeacherInterceptor();}
+    @Bean
+    public StudentInterceptor studentInterceptor(){return new StudentInterceptor();}
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(mythInterceptor()).addPathPatterns("/admin");
+        registry.addInterceptor(adminInterceptor()).addPathPatterns("/admin/**");
+        registry.addInterceptor(teacherInterceptor()).addPathPatterns("/teacher/**");
+        registry.addInterceptor(studentInterceptor()).addPathPatterns("/student/**");
+        registry.addInterceptor(mythInterceptor()).addPathPatterns("/**");
         super.addInterceptors(registry);
     }
 
