@@ -6,6 +6,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by mythos on 17-4-26.
@@ -18,6 +19,16 @@ public class MythInterceptor extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Long startTime = System.currentTimeMillis();
         request.setAttribute("startTime",startTime);
+        String path = request.getServletPath();
+        HttpSession session = request.getSession();
+        if (path.contains("logout")){
+            String[] result = path.split("/");
+//            System.out.println(result[0]+":"+result[1]);
+            session.removeAttribute(result[2]+"Id");
+            session.removeAttribute(result[2]+"Name");
+//            request.getRequestDispatcher("/").forward(request, response);
+
+        }
         return true;
     }
 

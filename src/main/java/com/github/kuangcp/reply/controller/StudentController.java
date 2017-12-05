@@ -19,8 +19,11 @@ public class StudentController {
     public String login(){
         return "/student/login";
     }
+
     @RequestMapping("/ChooseTopic")
     public String ChooseMajor(){
+
+
         return "student/ChooseTopic";
     }
 

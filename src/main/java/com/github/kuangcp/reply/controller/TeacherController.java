@@ -59,8 +59,7 @@ public class TeacherController {
      */
     @RequestMapping("/DealTopic")
     public ModelAndView deal(HttpSession session){
-//        long teacherId = (long) session.getAttribute("teacherId");
-        long teacherId = 1L;
+        long teacherId = (long) session.getAttribute("teacherId");
         List<Topic> topicList = topicService.listTopicByTeacher(teacherId);
         ModelAndView view = new ModelAndView("teacher/DealTopic");
 
@@ -68,11 +67,9 @@ public class TeacherController {
         for(Topic topic:topicList){
             studentList.put(topic.getTopicId(), topicService.listSelectTopicByTopic(topic.getTopicId()));
         }
-
         view.addObject("topicList", topicList);
         view.addObject("stuList", studentList);
         return view;
-//        return "teacher/DealTopic";
     }
     @RequestMapping("/ThesisProposal")
     public String ThesisProposal(){

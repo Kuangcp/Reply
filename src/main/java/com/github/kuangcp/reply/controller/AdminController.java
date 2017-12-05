@@ -3,6 +3,9 @@ package com.github.kuangcp.reply.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * Created by https://github.com/kuangcp on 17-10-10  下午3:11
  */
@@ -16,6 +19,9 @@ public class AdminController {
     }
     @RequestMapping("/login")
     public String login(){
-        return "/admin/login";
+        return "admin/login";
     }
+
+
+
 }

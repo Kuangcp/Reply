@@ -30,6 +30,15 @@ public class BaseController {
     @Autowired
     AdminService adminService;
 
+
+    @RequestMapping("/")
+    public String index1(){
+        return "/index";
+    }@RequestMapping("/index")
+    public String index2(){
+        return "/index";
+    }
+
     @RequestMapping("/login")
     public String login(){
         return "/login";
@@ -81,5 +90,9 @@ public class BaseController {
             }
         }
         return "/";
+    }
+    @RequestMapping("/logout/{type}")
+    public String logout(@PathVariable("type")String type){
+        return "/index";
     }
 }

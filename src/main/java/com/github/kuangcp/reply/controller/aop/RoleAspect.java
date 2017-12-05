@@ -1,17 +1,22 @@
-package com.github.kuangcp.reply.controller.aop;
-
-import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Aspect;
-
-/**
- * Created by https://github.com/kuangcp on 17-12-5  下午12:34
- *
- * @author kuangcp
- */
-@Slf4j
-@Aspect
-public class RoleAspect {
-
+//package com.github.kuangcp.reply.controller.aop;
+//
+//import lombok.extern.slf4j.Slf4j;
+//import org.aspectj.lang.ProceedingJoinPoint;
+//import org.aspectj.lang.annotation.Aspect;
+//import org.aspectj.lang.annotation.Before;
+//import org.aspectj.lang.annotation.Pointcut;
+//
+//import javax.servlet.http.HttpSession;
+//
+///**
+// * Created by https://github.com/kuangcp on 17-12-5  下午12:34
+// *
+// * @author kuangcp
+// */
+//@Slf4j
+//@Aspect
+//public class RoleAspect {
+//
 //    @Pointcut("execution(* com.github.kuangcp.reply.controller.AdminController.*(..))")
 //    private void adminLogin(){
 //
@@ -37,4 +42,4 @@ public class RoleAspect {
 //            }
 //        }
 //    }
-}
+//}
