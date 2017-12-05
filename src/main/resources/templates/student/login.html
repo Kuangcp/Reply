@@ -11,12 +11,13 @@
 
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/layer/lay/modules/layer.js}"></script>
+    <script th:src="@{/js/common/login.js}"></script>
     <script>
         // layer.msg('hello');
         layer.open({
             type: 1,
-            title: '   请登录系统',
-            content: '<form class="form-signin" th:action="@{/signin}" method="post">\n' +
+            title: '   登录学生系统',
+            content: '<form class="form-signin" th:action="@{/signin/student}" method="post">\n' +
             // '        <h2 class="form-signin-heading" onclick="login()">Please sign in</h2>\n' +
             // '        <label for="inputEmail" class="sr-only">Email address</label>\n' +
             '        <input type="text" name="name" class="form-control" placeholder="用户名/id" required="required" autofocus="autofocus" />\n' +
@@ -32,6 +33,7 @@
             '    </form>' //这里content是一个普通的String
         });
 
+        alertError()
     </script>
 </head>
 

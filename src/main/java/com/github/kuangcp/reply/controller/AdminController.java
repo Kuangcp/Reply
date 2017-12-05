@@ -4,15 +4,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by https://github.com/kuangcp on 17-12-4  下午2:49
- *
- * @author kuangcp
+ * Created by https://github.com/kuangcp on 17-10-10  下午3:11
  */
 @Controller
-public class BaseRouteController {
+@RequestMapping("/admin")
+public class AdminController {
 
+    @RequestMapping()
+    public String defaults(){
+        return "admin/admin";
+    }
     @RequestMapping("/login")
     public String login(){
-        return "/login";
+        return "/admin/login";
     }
 }

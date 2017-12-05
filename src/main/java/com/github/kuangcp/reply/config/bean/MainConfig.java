@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "reply.main")
 public class MainConfig {
-    private String name;
-    private String url;
+    public String loginFail;
+
+    public String loginTypeStu;
+    public String loginTypeTea;
+    public String loginTypeAdmin;
+//    private String
 }

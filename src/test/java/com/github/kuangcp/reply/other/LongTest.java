@@ -25,4 +25,14 @@ public class LongTest {
         System.out.println(calendar.get(Calendar.DAY_OF_MONTH));
         System.out.println(calendar.get(Calendar.DATE));
     }
+
+    @Test
+    public void parseLong(){
+        try{
+            System.out.println(Long.parseLong("890895y0"));
+        }catch (Exception e){
+            System.out.println(9);
+        }
+
+    }
 }

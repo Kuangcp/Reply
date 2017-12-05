@@ -25,8 +25,12 @@ server:
 
 reply:
   main:
-    name: myth
-    url: ui""dfso
+    loginFail: Fail
+    loginTypeStu: student
+    loginTypeTea: teacher
+    loginTypeAdmin: admin
+  weixin:
+    token: 90
 # HTTPS 配置
 #server:
 #  context-path: /myth

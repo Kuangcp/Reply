@@ -5,18 +5,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Created by https://github.com/kuangcp on 17-10-10  上午9:47
+ *
  */
 @Controller
 @RequestMapping("/student")
-public class StudentRouteController {
+public class StudentController {
     @RequestMapping()
     public String defaults(){
         return "student/student";
     }
 
-    @RequestMapping("/ChooseMajor")
+    @RequestMapping("/login")
+    public String login(){
+        return "/student/login";
+    }
+    @RequestMapping("/ChooseTopic")
     public String ChooseMajor(){
-        return "student/ChooseMajor";
+        return "student/ChooseTopic";
     }
 
     @RequestMapping("/DefenseProgress")

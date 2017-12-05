@@ -1,5 +1,6 @@
 package com.github.kuangcp.reply.domain;
 
+import com.github.kuangcp.reply.domain.user.Role;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -14,12 +15,12 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-public class Admin implements Serializable{
+public class Admin implements Serializable, Role{
     @Id
     @GeneratedValue
     private long adminId;
 
-    private String username;
-    private String pass;
+    private String name;
+    private String password;
 
 }

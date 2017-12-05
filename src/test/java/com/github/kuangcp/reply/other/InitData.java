@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Created by https://github.com/kuangcp on 17-12-4  下午12:31
- *
+ * 删除数据库后 初始化测试数据
  * @author kuangcp
  */
 @RunWith(SpringRunner.class)
@@ -22,6 +22,9 @@ public class InitData {
     TeacherDao teacherDao;
     @Autowired
     StudentDao studentDao;
+    @Autowired
+    AdminDao adminDao;
+
     @Autowired
     CollegeDao collegeDao;
     @Autowired
@@ -53,6 +56,7 @@ public class InitData {
         teacher.setName("test1");
         teacher.setMajorId(major);
         teacher.setTeamId(team);
+        teacher.setPassword("1");
         teacherDao.save(teacher);
 
         Class classs = new Class();
@@ -64,9 +68,12 @@ public class InitData {
         Student student = new Student();
         student.setName("test1");
         student.setClassId(classs);
+        student.setPassword("1");
         studentDao.save(student);
+
+        Admin admin =  new Admin();
+        admin.setName("admin1");
+        admin.setPassword("1");
+        adminDao.save(admin);
     }
-
-
-
 }

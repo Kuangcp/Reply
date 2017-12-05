@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Created by https://github.com/kuangcp on 17-11-28  下午7:37
- *
+ * 配置文件自动配置的配置类
  * @author kuangcp
  */
 @Configuration
