@@ -15,16 +15,41 @@
     </div>
 </th:block>
 
+<div th:each="topic:${topicList}">
+    <div class="layui-collapse">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title" th:text="${topic.name}"></h2>
+
+            <div class="layui-colla-content">
+                <button class="btn btn-success" onclick="selectTopic()">选择课题</button>
+                <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
+                <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>
+                <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
     layui.use(['element', 'layer'], function(){
         // var element = layui.element;
         // var layer = layui.layer;
     });
+    
+    function selectTopic() {
+        layer.open({
+            type: 1,
+            title: '选择课题',
+            area: ['350px', '250px'],
+            content: '<form action="/"><input name="comment"/><br/><button type="submit" class="btn btn-success">确定选择</button></form>'
+        })
+    }
     function editStudent() {
         layer.open({
             type: 1,
             title: '更换学生',
+            area: ['500px', '300px'],
             content: '<form><input name="studentId"/></form>'
         })
     }

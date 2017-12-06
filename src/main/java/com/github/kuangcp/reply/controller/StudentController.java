@@ -1,5 +1,6 @@
 package com.github.kuangcp.reply.controller;
 
+import com.github.kuangcp.reply.config.bean.MainConfig;
 import com.github.kuangcp.reply.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class StudentController {
 
     @Autowired
+    MainConfig mainConfig;
+    @Autowired
     StudentService studentService;
 
     @RequestMapping()
@@ -30,6 +33,12 @@ public class StudentController {
 
     // TODO 分页的简单实现
     // page 0开始 size 页大小
+    @RequestMapping("/ChooseTopic")
+    public ModelAndView ChooseMajorInit(){
+        ModelAndView view = new ModelAndView("student/ChooseTopic");
+        view.addObject("topicList", studentService.listTopic(0, mainConfig.chooseTopicPageSize));
+        return view;
+    }
     @RequestMapping("/ChooseTopic/{size}/{page}")
     public ModelAndView ChooseMajor(@PathVariable("page") int page, @PathVariable("size") int size){
         ModelAndView view = new ModelAndView("student/ChooseTopic");

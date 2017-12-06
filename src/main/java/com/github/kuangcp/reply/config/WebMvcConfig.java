@@ -1,9 +1,11 @@
 package com.github.kuangcp.reply.config;
 
+import com.github.kuangcp.reply.config.bean.MainConfig;
 import com.github.kuangcp.reply.controller.interceptor.AdminInterceptor;
 import com.github.kuangcp.reply.controller.interceptor.MythInterceptor;
 import com.github.kuangcp.reply.controller.interceptor.StudentInterceptor;
 import com.github.kuangcp.reply.controller.interceptor.TeacherInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +20,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter{
+
+    @Autowired
+    MainConfig mainConfig;
 
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {
@@ -38,10 +43,13 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(adminInterceptor()).addPathPatterns("/admin/**");
-        registry.addInterceptor(teacherInterceptor()).addPathPatterns("/teacher/**");
-        registry.addInterceptor(studentInterceptor()).addPathPatterns("/student/**");
+        if(!"false".equals(mainConfig.loginCheck)) {
+            registry.addInterceptor(adminInterceptor()).addPathPatterns("/admin/**");
+            registry.addInterceptor(teacherInterceptor()).addPathPatterns("/teacher/**");
+            registry.addInterceptor(studentInterceptor()).addPathPatterns("/student/**");
+        }
         registry.addInterceptor(mythInterceptor()).addPathPatterns("/**");
+
         super.addInterceptors(registry);
     }
 

@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "reply.main")
 public class MainConfig {
     public String loginFail;
-
+    public String loginCheck;
     public String loginTypeStu;
     public String loginTypeTea;
     public String loginTypeAdmin;
-//    private String
+    public int chooseTopicPageSize;
 }
