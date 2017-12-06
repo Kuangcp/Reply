@@ -9,18 +9,24 @@
     <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
 </head>
 <body>
+
 <th:block th:if="${#lists.size(topicList) == 0}" >
     <div style="font-size: 18px; margin: 100px 0 0 20%;">
         暂无课题，请等待教师发布课题<br/>
     </div>
 </th:block>
 
+<form>
+    <input type="hidden" th:value="${pageNum}-1" name="page"/>
+    <input onfocus="searchPage()" style="margin: 10px 20px 10px 30%; width: 300px;" type="text" name="name" title="课题名字" /><button type="submit">搜索</button>
+</form>
+
 <div th:each="topic:${topicList}">
     <div class="layui-collapse">
         <div class="layui-colla-item">
             <h2 class="layui-colla-title" th:text="${topic.name}"></h2>
-
             <div class="layui-colla-content">
+                <div th:utext="${topic.attention}"></div><br/>
                 <button class="btn btn-success" onclick="selectTopic()">选择课题</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
                 <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>
@@ -30,11 +36,21 @@
     </div>
 </div>
 
+<hr/>
+<div>
+    <a href="/myth/student/ChooseTopic"><button>首页</button></a>
+    <a th:href="@{/student/ChooseTopic/{id} (id=${pageNum}-2)}"><button>上一页</button></a>
+    <span th:text="${pageNum}"></span>
+    <th:block th:if="${pageNum lt pageTotal}" >
+        <a th:href="@{/student/ChooseTopic/{id} (id=${pageNum})}"><button>下一页</button></a>
+    </th:block>
+    <a th:href="@{/student/ChooseTopic/{id} (id=${pageTotal}-1)}"><button>尾页</button></a>
+    <span th:text="'共'+${pageTotal}+'页'"></span>
+</div>
+
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
     layui.use(['element', 'layer'], function(){
-        // var element = layui.element;
-        // var layer = layui.layer;
     });
     
     function selectTopic() {
@@ -42,7 +58,7 @@
             type: 1,
             title: '选择课题',
             area: ['350px', '250px'],
-            content: '<form action="/"><input name="comment"/><br/><button type="submit" class="btn btn-success">确定选择</button></form>'
+            content: '<form action="/myth/student/"><input name="comment"/><br/><button type="submit" class="btn btn-success">确定选择</button></form>'
         })
     }
     function editStudent() {
@@ -60,12 +76,15 @@
                 $.get('/myth/teacher/del/topic/'+topicId, function (data) {
                     console.log(data)
                     window.location.reload(true)
-                })
+                });
                 return 0
             }
         }, function(index){
             return 0
         });
+    }
+    function searchPage() {
+        window.location.href = "/myth/student/SearchTopic";
     }
 </script>
 </body>

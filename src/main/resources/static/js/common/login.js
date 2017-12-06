@@ -24,9 +24,9 @@ function login(name, type) {
         content: '<form class="form-signin" action="/myth/signin/'+type+'" method="post">\n' +
         // '        <h2 class="form-signin-heading" onclick="login()">Please sign in</h2>\n' +
         // '        <label for="inputEmail" class="sr-only">Email address</label>\n' +
-        '        <input type="text" name="name" class="form-control" placeholder="用户名/id" required="required" autofocus="autofocus" />\n' +
+        '        <input type="text" name="name" class="form-control" placeholder="用户名/id" required="required" autofocus="autofocus" value="1"/>\n' +
         // '        <label for="inputPassword" class="sr-only">Password</label>\n' +
-        '        <input type="password" name="password" class="form-control" placeholder="密码" required="required" />\n' +
+        '        <input type="password" name="password" class="form-control" placeholder="密码" required="required" value="1"/>\n' +
         // '        <div class="checkbox">\n' +
         // '            <label>\n' +
         // '                <input type="checkbox" value="remember-me" />\n' +

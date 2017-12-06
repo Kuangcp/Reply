@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
+<style>
+    .searchInput{
+        margin: 10px 20px 10px 30%;
+        width: 300px;
+    }
+</style>
+</head>
+<body>
+<!--<th:block th:if="${#lists.size(topicList) == 0}" >-->
+    <!--<th:block th:if="${pageNum eq null}">-->
+        <!--<div style="font-size: 18px; margin: 100px 0 0 20%;">-->
+            <!--暂无课题，请等待教师发布课题<br/>-->
+        <!--</div>-->
+    <!--</th:block>-->
+<!--</th:block>-->
+<form th:action="@{/student/ChooseTopic/q}">
+    <div th:unless="${pageNum eq null}">
+        <input type="hidden" th:value="${pageNum}-1" name="page"/>
+    </div>
+    <div th:if="${pageNum eq null}">
+        <input type="hidden" th:value="0" name="page"/>
+    </div>
+
+    <input class="searchInput" type="text" name="name" title="课题名字" autofocus="autofocus"/>
+    <button type="submit" >搜索</button>
+</form>
+</body>
+</html>

@@ -91,12 +91,9 @@ public class TeacherController {
     }
 
     // 以上是页面跳转
-
     @RequestMapping("/addTopic")
     public String addTopic(Topic topic, HttpSession session){
-
-        long teacherId = 1L;
-//        long teacherId = (long) session.getAttribute("teacherId");
+        long teacherId = (long) session.getAttribute("teacherId");
         log.info(teacherService.saveTopic(topic, teacherId).toString());
         return "redirect:/teacher/PublishTopic";
     }

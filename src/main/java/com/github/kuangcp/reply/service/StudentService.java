@@ -29,8 +29,22 @@ public class StudentService {
         return roleService.login(id, password, studentDao);
     }
 
+    /**
+     * 分页查询出所有
+     */
     public Page<Topic> listTopic(int page, int size){
         Pageable pageable = new PageRequest(page, size);
         return topicDao.listTopic(pageable);
     }
+
+    /**
+     * 按名字查询
+     */
+    public Page<Topic> listTopicByName(int page, int size, String name){
+        Pageable pageable = new PageRequest(page, size);
+        return topicDao.listTopicByName(name, pageable);
+    }
+
+
+
 }
