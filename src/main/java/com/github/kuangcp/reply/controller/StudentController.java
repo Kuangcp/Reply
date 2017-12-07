@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -42,27 +43,38 @@ public class StudentController {
     public ModelAndView ChooseTopic(@PathVariable("page") int page){
         return choosePage(page);
     }
-    @RequestMapping("/ChooseTopic/q")
-    public ModelAndView queryTopic(){
-        int page = 0;
-        String name = "<>>>>><<<<";
-        ModelAndView view = new ModelAndView("student/SearchTopic");
-        Page<Topic> lists = studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-        view.addObject("topicList", lists);
-        view.addObject("pageNum", page+1);
-        view.addObject("pageTotal", lists.getTotalPages());
-        return view;
-    }
+//    @RequestMapping("/ChooseTopic/q")
+//    public ModelAndView queryTopic(){
+//        int page = 0;
+//        String name = "<>>>>><<<<";
+//        ModelAndView view = new ModelAndView("student/SearchTopic");
+//        Page<Topic> lists = studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
+//        view.addObject("topicList", lists);
+//        view.addObject("pageNum", page+1);
+//        view.addObject("pageTotal", lists.getTotalPages());
+//        return view;
+//    }
     // 搜索
+//    @RequestMapping("/ChooseTopic/q/{page}")
+//    public ModelAndView queryTopic(@PathVariable("page") int page, String name){
+//        ModelAndView view = new ModelAndView("student/SearchTopic");
+//        Page<Topic> lists = studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
+//        view.addObject("topicList", lists);
+//        view.addObject("pageNum", page+1);
+//        view.addObject("pageTotal", lists.getTotalPages());
+//        return view;
+//    }
+    @ResponseBody
     @RequestMapping("/ChooseTopic/q/{page}")
-    public ModelAndView queryTopic(@PathVariable("page") int page, String name){
-        ModelAndView view = new ModelAndView("student/SearchTopic");
-        Page<Topic> lists = studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-        view.addObject("topicList", lists);
-        view.addObject("pageNum", page+1);
-        view.addObject("pageTotal", lists.getTotalPages());
-        return view;
+    public Page<Topic> queryTopic(@PathVariable("page") int page, String name){
+//        ModelAndView view = new ModelAndView("student/SearchTopic");
+        return studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
+//        view.addObject("topicList", lists);
+//        view.addObject("pageNum", page+1);
+//        view.addObject("pageTotal", lists.getTotalPages());
+//        return view;
     }
+
 
     // TODO 学生选题
     @RequestMapping("/ChooseTopic/f/{topicId}")

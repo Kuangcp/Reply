@@ -5,10 +5,10 @@
     <title>发布课题</title>
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"/>
+    <!--<link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}"/>-->
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
-    <script type="text/javascript" th:src="@{/nic/nicEdit.js}"></script>
+    <script type="text/javascript" th:src="@{/js/nic/nicEdit.js}"></script>
     <script type="text/javascript">
         bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
     </script>
@@ -31,7 +31,6 @@
             <th:block th:unless="${topicId eq null or topicId eq ''}">
                 <input type="hidden" name="topicId" th:value="${topicId}"/>
             </th:block>
-
         <button type="submit" class="btn btn-primary" style="margin-left:46%; margin-top: 10px;" >保存</button>
         </form>
     </div>

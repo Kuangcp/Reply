@@ -38,7 +38,7 @@
 
 <hr/>
 <div>
-    <a href="/myth/student/ChooseTopic"><button>首页</button></a>
+    <a href="student/ChooseTopic"><button>首页</button></a>
     <a th:href="@{/student/ChooseTopic/{id} (id=${pageNum}-2)}"><button>上一页</button></a>
     <span th:text="${pageNum}"></span>
     <th:block th:if="${pageNum lt pageTotal}" >
@@ -58,7 +58,7 @@
             type: 1,
             title: '选择课题',
             area: ['350px', '250px'],
-            content: '<form action="/myth/student/"><input name="comment"/><br/><button type="submit" class="btn btn-success">确定选择</button></form>'
+            content: '<form action="student/"><input name="comment"/><br/><button type="submit" class="btn btn-success">确定选择</button></form>'
         })
     }
     function editStudent() {

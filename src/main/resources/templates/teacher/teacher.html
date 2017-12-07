@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>教师子系统</title>
-    <link rel="stylesheet" th:href="@{/layer/css/layui.css}"/>
-    <link rel="stylesheet" th:href="@{/css/index.css}"/>
-    <script th:src="@{/js/jquery.min.js}"></script>
+    <link rel="stylesheet" href="layer/css/layui.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <script src="js/jquery.min.js"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin ">
@@ -24,8 +24,8 @@
                     <dd><a href="">邮件管理</a></dd>
                     <dd><a href="">消息管理</a></dd>
                     <dd><a href="">授权管理</a></dd>
-                    <dd><a href="/myth/student">学生</a></dd>
-                    <dd><a href="/myth/admin">管理员</a></dd>
+                    <dd><a href="student">学生</a></dd>
+                    <dd><a href="admin">管理员</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item">
@@ -51,7 +51,7 @@
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
-                    <dd><a href="/myth/logout/teacher">注销登录</a></dd>
+                    <dd><a href="logout/teacher">注销登录</a></dd>
                 </dl>
             </li>
         </ul>

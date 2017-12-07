@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
+    <title>搜索</title>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../layer/css/layui.css" media="all"/>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 <style>
     .searchInput{
         margin: 10px 20px 10px 30%;
         width: 300px;
     }
 </style>
+
+
+
 </head>
 <body>
 <!--<th:block th:if="${#lists.size(topicList) == 0}" >-->
@@ -22,16 +26,34 @@
         <!--</div>-->
     <!--</th:block>-->
 <!--</th:block>-->
-<form th:action="@{/student/ChooseTopic/q}">
-    <div th:unless="${pageNum eq null}">
-        <input type="hidden" th:value="${pageNum}-1" name="page"/>
-    </div>
-    <div th:if="${pageNum eq null}">
-        <input type="hidden" th:value="0" name="page"/>
-    </div>
+<!--<form action="student/ChooseTopic/">-->
+    <!--<input class="searchInput" type="text" name="name" id="inputName" title="课题名字"/>-->
+    <!--<button type="submit" >搜索</button>-->
+<!--</form>-->
+<div>
+    <input class="searchInput" type="text" name="name" id="inputName" title="课题名字"/>
+    <button type="button" onclick="query()">搜索</button>
+</div>
 
-    <input class="searchInput" type="text" name="name" title="课题名字" autofocus="autofocus"/>
-    <button type="submit" >搜索</button>
-</form>
+<script>
+    $("#inputName").focus()
+
+    function query() {
+        var name=$("#inputName").val()
+        $.get("../student/ChooseTopic/q/0?name="+name, function (data) {
+            // alert(data)
+            console.log(data)
+            // console.log(data.size)
+            console.log(data.content)
+            data.content.forEach(function (value, index) {
+                console.log(value.attention+":"+index)
+                console.log(value.name)
+            })
+
+
+            
+        })
+    }
+</script>
 </body>
 </html>
