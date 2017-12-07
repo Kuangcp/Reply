@@ -19,4 +19,5 @@ public class MainConfig {
     public String loginTypeTea;
     public String loginTypeAdmin;
     public int chooseTopicPageSize;
+
 }

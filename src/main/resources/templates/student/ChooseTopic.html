@@ -27,7 +27,7 @@
             <h2 class="layui-colla-title" th:text="${topic.name}"></h2>
             <div class="layui-colla-content">
                 <div th:utext="${topic.attention}"></div><br/>
-                <button class="btn btn-success" onclick="selectTopic()">选择课题</button>
+                <button class="btn btn-success" th:onclick="'javascript:selectTopic(\''+${topic.topicId}+'\');'">选择课题</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
                 <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>
                 <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
@@ -52,13 +52,50 @@
 <script>
     layui.use(['element', 'layer'], function(){
     });
-    
-    function selectTopic() {
-        layer.open({
+
+    function selectTopic(topicId) {
+        var index = layer.open({
             type: 1,
             title: '选择课题',
             area: ['350px', '250px'],
-            content: '<form action="student/"><input name="comment"/><br/><button type="submit" class="btn btn-success">确定选择</button></form>'
+            content: '<div><textarea name="comment" id="submitComment"/><br/><button type="button" onclick="select('+topicId+','+index+')" class="btn btn-success">确定选择</button></div>'
+        })
+    }
+    // TODO 不能关闭窗口
+
+    // function selectTopics(topicId) {
+    //     layer.open({
+    //         btn: ['取消', '确认'] //可以无限个按钮
+    //         ,btn2: function(index, layero){
+    //             var comment= $("#submitComment").val()
+    //             $.get('/myth/student/ChooseTopic/f/'+topicId+'?comment='+comment, function (data) {
+    //                 if('Fail' === data){
+    //                     layer.msg('选题失败')
+    //                 }else{
+    //                     layer.msg('选题成功')
+    //                 }
+    //             })
+    //             $.get('/myth/teacher/del/topic/'+topicId, function (data) {
+    //                 console.log(data)
+    //                 // window.location.reload(true)
+    //             });
+    //             return 0
+    //         }
+    //     }, function(index){
+    //         return 0
+    //     });
+        
+    // }
+    function select(topicId, index) {
+        layer.close(index)
+        var coment= $("#submitComment").val()
+        console.log("提交")
+        $.get('/myth/student/ChooseTopic/f/'+topicId+'?comment='+coment, function (data) {
+            if('Fail' === data){
+                layer.msg('选题失败')
+            }else{
+                layer.msg('选题成功')
+            }
         })
     }
     function editStudent() {

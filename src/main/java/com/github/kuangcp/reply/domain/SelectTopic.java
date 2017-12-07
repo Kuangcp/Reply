@@ -1,6 +1,8 @@
 package com.github.kuangcp.reply.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -11,6 +13,8 @@ import javax.persistence.*;
  */
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class SelectTopic {
 
     @Id
@@ -26,5 +30,15 @@ public class SelectTopic {
 
     private String reply;// 1  0
     private String replyComment;
+
+    // 快速新增
+    public SelectTopic(Student studentId, Topic topicId, String comment){
+        this.studentId = studentId;
+        this.topicId = topicId;
+        this.comment = comment;
+
+    }
+
+
 
 }

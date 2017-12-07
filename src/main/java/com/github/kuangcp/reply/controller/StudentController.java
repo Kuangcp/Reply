@@ -1,6 +1,7 @@
 package com.github.kuangcp.reply.controller;
 
 import com.github.kuangcp.reply.config.bean.MainConfig;
+import com.github.kuangcp.reply.domain.SelectTopic;
 import com.github.kuangcp.reply.domain.Topic;
 import com.github.kuangcp.reply.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by https://github.com/kuangcp on 17-10-10  上午9:47
@@ -43,44 +46,26 @@ public class StudentController {
     public ModelAndView ChooseTopic(@PathVariable("page") int page){
         return choosePage(page);
     }
-//    @RequestMapping("/ChooseTopic/q")
-//    public ModelAndView queryTopic(){
-//        int page = 0;
-//        String name = "<>>>>><<<<";
-//        ModelAndView view = new ModelAndView("student/SearchTopic");
-//        Page<Topic> lists = studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-//        view.addObject("topicList", lists);
-//        view.addObject("pageNum", page+1);
-//        view.addObject("pageTotal", lists.getTotalPages());
-//        return view;
-//    }
-    // 搜索
-//    @RequestMapping("/ChooseTopic/q/{page}")
-//    public ModelAndView queryTopic(@PathVariable("page") int page, String name){
-//        ModelAndView view = new ModelAndView("student/SearchTopic");
-//        Page<Topic> lists = studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-//        view.addObject("topicList", lists);
-//        view.addObject("pageNum", page+1);
-//        view.addObject("pageTotal", lists.getTotalPages());
-//        return view;
-//    }
     @ResponseBody
     @RequestMapping("/ChooseTopic/q/{page}")
     public Page<Topic> queryTopic(@PathVariable("page") int page, String name){
-//        ModelAndView view = new ModelAndView("student/SearchTopic");
+        name = name.replace(' ', '%');
         return studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-//        view.addObject("topicList", lists);
-//        view.addObject("pageNum", page+1);
-//        view.addObject("pageTotal", lists.getTotalPages());
-//        return view;
+
     }
 
-
     // TODO 学生选题
+    @ResponseBody
     @RequestMapping("/ChooseTopic/f/{topicId}")
-    public String choose(@PathVariable("topicId") long topicId){
-
-        return "";
+    public String choose(@PathVariable("topicId") long topicId, String comment, HttpSession session){
+        long id = (long) session.getAttribute("studentId");
+        System.out.println(id+topicId+comment);
+        SelectTopic result = studentService.saveSelect(id, topicId, comment);
+        if(result==null){
+            return mainConfig.loginFail;
+        }else {
+            return result.getSelectId() + "";
+        }
     }
 
     @RequestMapping("/SearchTopic")

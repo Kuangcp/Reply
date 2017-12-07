@@ -1,7 +1,10 @@
 package com.github.kuangcp.reply.service;
 
+import com.github.kuangcp.reply.dao.SelectTopicDao;
 import com.github.kuangcp.reply.dao.StudentDao;
 import com.github.kuangcp.reply.dao.TopicDao;
+import com.github.kuangcp.reply.domain.SelectTopic;
+import com.github.kuangcp.reply.domain.Student;
 import com.github.kuangcp.reply.domain.Topic;
 import com.github.kuangcp.reply.service.base.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class StudentService {
     @Autowired
     TopicDao topicDao;
 
+    @Autowired
+    SelectTopicDao selectTopicDao;
+
     public String login(long id, String password){
         return roleService.login(id, password, studentDao);
     }
@@ -43,6 +49,10 @@ public class StudentService {
     public Page<Topic> listTopicByName(int page, int size, String name){
         Pageable pageable = new PageRequest(page, size);
         return topicDao.listTopicByName(name, pageable);
+    }
+    // 选题
+    public SelectTopic saveSelect(long studentId, long topicId, String comment){
+        return selectTopicDao.save(new SelectTopic(new Student(studentId), new Topic(topicId), comment));
     }
 
 

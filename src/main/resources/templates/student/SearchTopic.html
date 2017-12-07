@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>搜索</title>
-
     <link rel="stylesheet" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../layer/css/layui.css" media="all"/>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
 <style>
     .searchInput{
         margin: 10px 20px 10px 30%;
@@ -15,45 +12,60 @@
     }
 </style>
 
-
-
 </head>
 <body>
-<!--<th:block th:if="${#lists.size(topicList) == 0}" >-->
-    <!--<th:block th:if="${pageNum eq null}">-->
-        <!--<div style="font-size: 18px; margin: 100px 0 0 20%;">-->
-            <!--暂无课题，请等待教师发布课题<br/>-->
-        <!--</div>-->
-    <!--</th:block>-->
-<!--</th:block>-->
-<!--<form action="student/ChooseTopic/">-->
-    <!--<input class="searchInput" type="text" name="name" id="inputName" title="课题名字"/>-->
-    <!--<button type="submit" >搜索</button>-->
-<!--</form>-->
 <div>
-    <input class="searchInput" type="text" name="name" id="inputName" title="课题名字"/>
-    <button type="button" onclick="query()">搜索</button>
+    <input class="searchInput" type="text" name="name" id="inputName" title="课题名字" />
+    <button type="button" onclick="query()" >搜索</button>
+</div>
+<div  id="topicList">
+
 </div>
 
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/common/inputTool.js"></script>
+<script src="/myth/layer/layui.js" charset="utf-8"></script>
 <script>
+
     $("#inputName").focus()
+    enterSubmit("inputName", query)
 
     function query() {
+        $("#topicList").html('')
         var name=$("#inputName").val()
         $.get("../student/ChooseTopic/q/0?name="+name, function (data) {
-            // alert(data)
-            console.log(data)
-            // console.log(data.size)
-            console.log(data.content)
-            data.content.forEach(function (value, index) {
-                console.log(value.attention+":"+index)
-                console.log(value.name)
-            })
-
-
-            
-        })
+            // console.log(data)
+            // console.log(data.content)
+            resultList=''
+            if(data.content.length === 0){
+                resultList='<h3>暂无相关课题</h3>';
+            }else {
+                data.content.forEach(function (value) {
+                    resultList = resultList + '<div class="layui-collapse">' +
+                        '<div class="layui-colla-item">' +
+                        '    <h2 class="layui-colla-title">' + value.name + '<i class="layui-icon layui-colla-icon"></i></h2>' +
+                        '    <div class="layui-colla-content">' +
+                        '          <div>' + value.attention + '</div><br/>' +
+                        '          <button class="btn btn-success" onclick="selectTopic()">选择课题</button>' +
+                        '          <a ><button class="btn btn-primary">修改课题</button></a>' +
+                        '          <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>' +
+                        '          <button class="btn btn-danger" >删除课题</button>' +
+                        '    </div>' +
+                        '  </div>' +
+                        '</div>'
+                })
+            }
+            $("#topicList").html(resultList)
+            // 异步的执行 所以要在ajax中运行
+            layui.use(['element', 'layer'], function(){
+                // console.log("更新")
+                var element = layui.element;
+                element.init();
+            });
+    })
     }
+
 </script>
 </body>
 </html>

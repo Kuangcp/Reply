@@ -21,7 +21,7 @@ public interface TopicDao extends JpaRepository<Topic, Long>{
     @Query("select t from Topic t")
     Page<Topic> listTopic(Pageable pageable);
 
-    @Query("select t from Topic t where t.name=?1")
+    @Query("select t from Topic t where t.name like %?1%")
     Page<Topic> listTopicByName(String name, Pageable pageable);
 
 
