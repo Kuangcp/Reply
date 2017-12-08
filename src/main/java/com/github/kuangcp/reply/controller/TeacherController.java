@@ -44,8 +44,6 @@ public class TeacherController {
     }
     @RequestMapping("/PublishTopic")
     public String publish(){
-
-
         return "/teacher/PublishTopic";
     }
     @RequestMapping("/init")

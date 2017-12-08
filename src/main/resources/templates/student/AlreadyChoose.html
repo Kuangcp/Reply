@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>搜索</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../layer/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../css/topicList.css"/>
+</head>
+<body>
+<div  id="topicList"></div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/common/inputTool.js"></script>
+<script src="/myth/layer/layui.js" charset="utf-8"></script>
+<script>
+
+    $.get("../student/AlreadyChoose/a", function (data) {
+        console.log(data)
+        // console.log(data.content)
+        resultList = ''
+        if (data.length === 0) {
+            resultList = '<h3>暂无相关课题</h3>';
+        } else {
+            data.forEach(function (value) {
+                resultList = resultList + '<div class="layui-collapse">' +
+                    '<div class="layui-colla-item">' +
+                    '    <h2 class="layui-colla-title">' + value.topicId.name + '<i class="layui-icon layui-colla-icon"></i></h2>' +
+                    '    <div class="layui-colla-content">' +
+                    '          <div class="list-item">' + value.topicId.attention + '</div><br/>' +
+                    '          <button class="btn btn-primary" onclick="showReply()">查看教师回复</button>' +
+                    '          <button class="btn btn-danger" >取消选择</button>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '</div>'
+            })
+        }
+        $("#topicList").html(resultList)
+        // 异步的执行 所以要在ajax中运行
+        layui.use(['element', 'layer'], function () {
+            // console.log("更新")
+            var element = layui.element;
+            element.init();
+        });
+    })
+
+</script>
+</body>
+</html>

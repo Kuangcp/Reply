@@ -1,3 +1,15 @@
+function readParamter(type) {
+    var url = location.search;
+    if (url.indexOf("?") !== -1) {
+        url = url.split("?")[1]
+        console.log(url)
+    }else{
+        //原意是想通过这个进行刷新页面
+        // window.location.href = "/myth/"+type+"/login?error=true"
+    }
+
+}
+
 function alertError() {
     var url = location.search;
     if (url.indexOf("?") !== -1) {

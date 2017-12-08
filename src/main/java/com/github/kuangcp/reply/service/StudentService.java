@@ -13,6 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by https://github.com/kuangcp on 17-12-5  上午9:35
  *
@@ -42,6 +44,11 @@ public class StudentService {
         Pageable pageable = new PageRequest(page, size);
         return topicDao.listTopic(pageable);
     }
+    public List<SelectTopic> listTopicAlready(long studentId){
+//        Pageable pageable = new PageRequest(page, size);
+        return selectTopicDao.findAllByStudentId(new Student(studentId));
+
+    }
 
     /**
      * 按名字查询
@@ -51,8 +58,14 @@ public class StudentService {
         return topicDao.listTopicByName(name, pageable);
     }
     // 选题
-    public SelectTopic saveSelect(long studentId, long topicId, String comment){
-        return selectTopicDao.save(new SelectTopic(new Student(studentId), new Topic(topicId), comment));
+    public String saveSelect(long studentId, long topicId, String comment){
+        Student student = new Student(studentId);
+        Topic topic = new Topic(topicId);
+        SelectTopic selectTopic = selectTopicDao.findByStudentIdAndTopicId(student, topic);
+        if(selectTopic!=null){
+            return "Already";
+        }
+        return selectTopicDao.save(new SelectTopic(student, topic, comment)).getSelectId()+"";
     }
 
 

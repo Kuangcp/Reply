@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="layer/css/layui.css"/>
     <link rel="stylesheet" href="css/index.css"/>
     <script src="js/jquery.min.js"></script>
+    <script src="js/common/mainPage.js"></script>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -69,7 +70,7 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="type-title" href="javascript:;">主要功能</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" onclick="turn('ChooseTopic/0')">选择课题</a></dd>
+                        <dd><a href="javascript:;" onclick="turn('ChooseTopic')">选择课题</a></dd>
                         <dd><a href="javascript:;" onclick="turn('DefenseProgress')">答辩进度</a></dd>
                         <dd><a href="javascript:;" onclick="turn('QueryScore')">查询成绩</a></dd>
                     </dl>
@@ -97,7 +98,8 @@
     <div class="layui-body main-body main-body-student">
         <!-- 内容主体区域 -->
         <!--<div style="padding: 15px;">内容主体区域</div>-->
-        <iframe src="../myth/student/init" style="width:100%;height:100%;" id="main_page"></iframe>
+        <iframe src="student/init" style="width:100%;height:100%;" id="main_page"></iframe>
+
     </div>
 
     <div class="layui-footer footer-student">
@@ -107,17 +109,21 @@
 </div>
 <script src="layer/layui.all.js"></script>
 <script>
+    home('student')
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
 
     });
-    function turn(target) {
-//        alert(target);
-        console.log(target);
-        $("#main_page").attr('src','../myth/student/'+target);
+    // $(".main-body-student").load("student/init")
+//     function turn(target) {
+// //         console.log(target);
+//         $("#main_page").attr('src','student/'+target);
+//         // if(target==="ChooseTopic/0") target = "ChooseTopic"
+//         // $(".main-body-student").load("student/"+target)
+//
+//     }
 
-    }
 </script>
 </body>
 </html>

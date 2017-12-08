@@ -5,8 +5,9 @@
     <title>选课题</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}" ></script>
     <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
+    <link rel="stylesheet" href="../css/topicList.css"/>
 </head>
 <body>
 
@@ -16,21 +17,22 @@
     </div>
 </th:block>
 
-<form>
+<div>
     <input type="hidden" th:value="${pageNum}-1" name="page"/>
     <input onfocus="searchPage()" style="margin: 10px 20px 10px 30%; width: 300px;" type="text" name="name" title="课题名字" /><button type="submit">搜索</button>
-</form>
+    <button onclick="showAlready()" class="btn btn-success">查看已选课题</button>
+</div>
 
 <div th:each="topic:${topicList}">
     <div class="layui-collapse">
-        <div class="layui-colla-item">
+        <div class="layui-colla-item ">
             <h2 class="layui-colla-title" th:text="${topic.name}"></h2>
             <div class="layui-colla-content">
-                <div th:utext="${topic.attention}"></div><br/>
+                <div th:utext="${topic.attention}" class="list-item"></div><br/>
                 <button class="btn btn-success" th:onclick="'javascript:selectTopic(\''+${topic.topicId}+'\');'">选择课题</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
                 <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>
-                <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
+                <!--<button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>-->
             </div>
         </div>
     </div>
@@ -54,47 +56,25 @@
     });
 
     function selectTopic(topicId) {
-        var index = layer.open({
+        layer.open({
             type: 1,
-            title: '选择课题',
-            area: ['350px', '250px'],
-            content: '<div><textarea name="comment" id="submitComment"/><br/><button type="button" onclick="select('+topicId+','+index+')" class="btn btn-success">确定选择</button></div>'
+            title: '选择该课题',
+            area: ['320px', '220px'],
+            resize: false,
+            content: '<div><textarea name="comment" id="submitComment" style="width: 300px;height: 120px;border: none;margin: 1px 0 5px 10px;" placeholder="请输入你想发送的消息"/><br/>' +
+            '<button type="button" onclick="select('+topicId+')" class="btn btn-success" style="margin-left: 32%;">确定选择</button></div>'
         })
     }
-    // TODO 不能关闭窗口
-
-    // function selectTopics(topicId) {
-    //     layer.open({
-    //         btn: ['取消', '确认'] //可以无限个按钮
-    //         ,btn2: function(index, layero){
-    //             var comment= $("#submitComment").val()
-    //             $.get('/myth/student/ChooseTopic/f/'+topicId+'?comment='+comment, function (data) {
-    //                 if('Fail' === data){
-    //                     layer.msg('选题失败')
-    //                 }else{
-    //                     layer.msg('选题成功')
-    //                 }
-    //             })
-    //             $.get('/myth/teacher/del/topic/'+topicId, function (data) {
-    //                 console.log(data)
-    //                 // window.location.reload(true)
-    //             });
-    //             return 0
-    //         }
-    //     }, function(index){
-    //         return 0
-    //     });
-        
-    // }
-    function select(topicId, index) {
-        layer.close(index)
+    function select(topicId) {
+        layer.closeAll('page')
         var coment= $("#submitComment").val()
-        console.log("提交")
-        $.get('/myth/student/ChooseTopic/f/'+topicId+'?comment='+coment, function (data) {
+        $.get('/myth/student/ChooseTopic/s/'+topicId+'?comment='+coment, function (data) {
             if('Fail' === data){
-                layer.msg('选题失败')
+                layer.msg('选题失败,请刷新页面重试')
+            }else if('Already' === data){
+                layer.msg('你已经选了该课题')
             }else{
-                layer.msg('选题成功')
+                layer.msg('选题成功，请等待对应教师回复')
             }
         })
     }
@@ -122,6 +102,9 @@
     }
     function searchPage() {
         window.location.href = "/myth/student/SearchTopic";
+    }
+    function showAlready() {
+        window.location.href = "/myth/student/AlreadyChoose";
     }
 </script>
 </body>

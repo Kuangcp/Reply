@@ -17,7 +17,4 @@ public class AdminController {
     public String login(){
         return "admin/login";
     }
-
-
-
 }

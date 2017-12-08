@@ -1,6 +1,7 @@
 package com.github.kuangcp.reply.dao;
 
 import com.github.kuangcp.reply.domain.SelectTopic;
+import com.github.kuangcp.reply.domain.Student;
 import com.github.kuangcp.reply.domain.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface SelectTopicDao extends JpaRepository<SelectTopic, Long>{
     List<SelectTopic> findAllByTopicId(Topic topic);
+    SelectTopic findByStudentIdAndTopicId(Student studentId, Topic topicId);
+    List<SelectTopic> findAllByStudentId(Student student);
 }

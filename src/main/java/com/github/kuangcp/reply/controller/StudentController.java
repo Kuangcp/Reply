@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by https://github.com/kuangcp on 17-10-10  上午9:47
@@ -37,34 +38,40 @@ public class StudentController {
         return "/student/login";
     }
 
-    // page 0开始 size 页大小
-//    @RequestMapping("/ChooseTopic")
-//    public ModelAndView ChooseTopicInit(){
-//        return choosePage(0);
-//    }
+    //page 0开始 size 页大小
+    @RequestMapping("/ChooseTopic")
+    public ModelAndView ChooseTopicInit(){
+        return choosePage(0);
+    }
     @RequestMapping("/ChooseTopic/{page}")
     public ModelAndView ChooseTopic(@PathVariable("page") int page){
         return choosePage(page);
     }
     @ResponseBody
+    @RequestMapping("/AlreadyChoose/a")
+    public List<SelectTopic> alreadySelect(HttpSession session){
+        long id = (long) session.getAttribute("studentId");
+        return studentService.listTopicAlready(id);
+    }
+    //查询
+    @ResponseBody
     @RequestMapping("/ChooseTopic/q/{page}")
     public Page<Topic> queryTopic(@PathVariable("page") int page, String name){
         name = name.replace(' ', '%');
         return studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-
     }
-
-    // TODO 学生选题
+    //选题
     @ResponseBody
-    @RequestMapping("/ChooseTopic/f/{topicId}")
+    @RequestMapping("/ChooseTopic/s/{topicId}")
     public String choose(@PathVariable("topicId") long topicId, String comment, HttpSession session){
         long id = (long) session.getAttribute("studentId");
-        System.out.println(id+topicId+comment);
-        SelectTopic result = studentService.saveSelect(id, topicId, comment);
-        if(result==null){
+        String result = studentService.saveSelect(id, topicId, comment);
+        if(result==null || "".equals(result)){
             return mainConfig.loginFail;
+        }else if("Already".equals(result)){
+            return "Already";
         }else {
-            return result.getSelectId() + "";
+            return result;
         }
     }
 
@@ -75,6 +82,10 @@ public class StudentController {
     @RequestMapping("/DefenseProgress")
     public String DefenseProgress(){
         return "student/DefenseProgress";
+    }
+    @RequestMapping("/AlreadyChoose")
+    public String AlreadyChoose(){
+        return "student/AlreadyChoose";
     }
 
     @RequestMapping("/init")
@@ -92,9 +103,7 @@ public class StudentController {
     }
 
     private ModelAndView choosePage(int page){
-        if(page < 0){
-            page = 0;
-        }
+        if(page < 0){page = 0;}
         ModelAndView view = new ModelAndView("student/ChooseTopic");
         Page<Topic> lists = studentService.listTopic(page, mainConfig.chooseTopicPageSize);
         view.addObject("topicList", lists);
