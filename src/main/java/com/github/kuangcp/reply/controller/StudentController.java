@@ -4,6 +4,8 @@ import com.github.kuangcp.reply.config.bean.MainConfig;
 import com.github.kuangcp.reply.domain.SelectTopic;
 import com.github.kuangcp.reply.domain.Topic;
 import com.github.kuangcp.reply.service.StudentService;
+import com.github.kuangcp.reply.service.TopicService;
+import com.github.kuangcp.reply.service.util.QueryUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,12 @@ public class StudentController {
     @Autowired
     MainConfig mainConfig;
     @Autowired
+    QueryUtil queryUtil;
+
+    @Autowired
     StudentService studentService;
+    @Autowired
+    TopicService topicService;
 
     @RequestMapping()
     public String defaults(){
@@ -50,9 +57,14 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/AlreadyChoose/a")
     public List<SelectTopic> alreadySelect(HttpSession session){
-        long id = (long) session.getAttribute("studentId");
-        return studentService.listTopicAlready(id);
+        return studentService.listTopicAlready(queryUtil.getStudentId(session));
     }
+    @ResponseBody
+    @RequestMapping("/ReadReply/{topicId}")
+    public SelectTopic readReply(@PathVariable("topicId") long topicId, HttpSession session){
+        return topicService.findSelectTopic(queryUtil.getStudentId(session), topicId);
+    }
+
     //查询
     @ResponseBody
     @RequestMapping("/ChooseTopic/q/{page}")
@@ -64,8 +76,7 @@ public class StudentController {
     @ResponseBody
     @RequestMapping("/ChooseTopic/s/{topicId}")
     public String choose(@PathVariable("topicId") long topicId, String comment, HttpSession session){
-        long id = (long) session.getAttribute("studentId");
-        String result = studentService.saveSelect(id, topicId, comment);
+        String result = studentService.saveSelect(queryUtil.getStudentId(session), topicId, comment);
         if(result==null || "".equals(result)){
             return mainConfig.loginFail;
         }else if("Already".equals(result)){

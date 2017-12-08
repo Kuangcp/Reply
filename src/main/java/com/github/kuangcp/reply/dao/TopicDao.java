@@ -1,5 +1,6 @@
 package com.github.kuangcp.reply.dao;
 
+import com.github.kuangcp.reply.domain.Student;
 import com.github.kuangcp.reply.domain.Teacher;
 import com.github.kuangcp.reply.domain.Topic;
 import org.springframework.data.domain.Page;
@@ -18,8 +19,8 @@ public interface TopicDao extends JpaRepository<Topic, Long>{
 
     List<Topic> findAllByGuideId(Teacher guideId);
 
-    @Query("select t from Topic t")
-    Page<Topic> listTopic(Pageable pageable);
+    @Query(value = "select t from Topic t where t.studentId <> ?1")
+    Page<Topic> listTopic(Student studentId, Pageable pageable);
 
     @Query("select t from Topic t where t.name like %?1%")
     Page<Topic> listTopicByName(String name, Pageable pageable);

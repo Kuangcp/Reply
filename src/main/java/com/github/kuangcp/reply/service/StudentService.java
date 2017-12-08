@@ -1,5 +1,6 @@
 package com.github.kuangcp.reply.service;
 
+import com.github.kuangcp.reply.config.bean.MainConfig;
 import com.github.kuangcp.reply.dao.SelectTopicDao;
 import com.github.kuangcp.reply.dao.StudentDao;
 import com.github.kuangcp.reply.dao.TopicDao;
@@ -24,6 +25,8 @@ import java.util.List;
 public class StudentService {
 
     @Autowired
+    MainConfig mainConfig;
+    @Autowired
     RoleService roleService;
     @Autowired
     StudentDao studentDao;
@@ -42,12 +45,11 @@ public class StudentService {
      */
     public Page<Topic> listTopic(int page, int size){
         Pageable pageable = new PageRequest(page, size);
-        return topicDao.listTopic(pageable);
+        return topicDao.listTopic(new Student(mainConfig.defaultTopicStudentId), pageable);
     }
     public List<SelectTopic> listTopicAlready(long studentId){
 //        Pageable pageable = new PageRequest(page, size);
         return selectTopicDao.findAllByStudentId(new Student(studentId));
-
     }
 
     /**
@@ -64,10 +66,8 @@ public class StudentService {
         SelectTopic selectTopic = selectTopicDao.findByStudentIdAndTopicId(student, topic);
         if(selectTopic!=null){
             return "Already";
+        }else{
+            return selectTopicDao.save(new SelectTopic(student, topic, comment)).getSelectId()+"";
         }
-        return selectTopicDao.save(new SelectTopic(student, topic, comment)).getSelectId()+"";
     }
-
-
-
 }

@@ -15,8 +15,25 @@
 <script src="../js/common/inputTool.js"></script>
 <script src="/myth/layer/layui.js" charset="utf-8"></script>
 <script>
+    function showReply(topicId) {
+        $.get('/myth/student/ReadReply/'+topicId, function (data) {
+            // console.log(data)
+            result = ''
+            teaName = data.topicId.guideId.name
+            if(data.reply == null){
+                result = teaName+'教师还没有回复'
+            }else if(data.reply === 1){
+                result = teaName+'教师同意了你的选题申请'
+            }else if(data.reply === 0){
+                result = teaName+'教师拒绝了你的申请, 并对你说'+data.replyComment
+            }
+            layer.msg(result)
+        })
+
+    }
+
     $.get("../student/AlreadyChoose/a", function (data) {
-        console.log(data)
+        // console.log(data)
         // console.log(data.content)
         resultList = ''
         if (data.length === 0) {
@@ -28,7 +45,7 @@
                     '    <h2 class="layui-colla-title">' + value.topicId.name + '<i class="layui-icon layui-colla-icon"></i></h2>' +
                     '    <div class="layui-colla-content">' +
                     '          <div class="list-item">' + value.topicId.attention + '</div><br/>' +
-                    '          <button class="btn btn-primary" onclick="showReply()">查看教师回复</button>' +
+                    '          <button class="btn btn-primary" onclick="showReply('+value.topicId.topicId+')">查看教师回复</button>' +
                     '          <button class="btn btn-danger" >取消选择</button>' +
                     '    </div>' +
                     '  </div>' +

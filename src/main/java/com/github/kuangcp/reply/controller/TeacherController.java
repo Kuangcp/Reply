@@ -5,6 +5,7 @@ import com.github.kuangcp.reply.domain.SelectTopic;
 import com.github.kuangcp.reply.domain.Topic;
 import com.github.kuangcp.reply.service.TeacherService;
 import com.github.kuangcp.reply.service.TopicService;
+import com.github.kuangcp.reply.service.util.QueryUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by https://github.com/kuangcp on 17-12-4  上午10:57
@@ -27,6 +26,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/teacher")
 public class TeacherController {
+
+    @Autowired
+    QueryUtil queryUtil;
     @Autowired
     TeacherService teacherService;
     @Autowired
@@ -53,21 +55,25 @@ public class TeacherController {
 
     /**
      * 展示课题
-     * @param session
      */
     @RequestMapping("/DealTopic")
     public ModelAndView deal(HttpSession session){
         long teacherId = (long) session.getAttribute("teacherId");
         List<Topic> topicList = topicService.listTopicByTeacher(teacherId);
         ModelAndView view = new ModelAndView("teacher/DealTopic");
-
-        Map<Long, List<SelectTopic>> studentList = new HashMap<>();
-        for(Topic topic:topicList){
-            studentList.put(topic.getTopicId(), topicService.listSelectTopicByTopic(topic.getTopicId()));
-        }
+//        Map<Long, List<SelectTopic>> studentList = new HashMap<>();
+//        for(Topic topic:topicList){
+//            studentList.put(topic.getTopicId(), topicService.listSelectTopicByTopic(topic.getTopicId()));
+//        }
         view.addObject("topicList", topicList);
-        view.addObject("stuList", studentList);
+//        view.addObject("stuList", studentList);
         return view;
+    }
+    // 列出所有的列表
+    @ResponseBody
+    @RequestMapping("/ListSelectTopic/{topicId}")
+    public List<SelectTopic>listTopic(@PathVariable("topicId")long topicId){
+        return topicService.listSelectTopicByTopic(topicId);
     }
     @RequestMapping("/ThesisProposal")
     public String ThesisProposal(){

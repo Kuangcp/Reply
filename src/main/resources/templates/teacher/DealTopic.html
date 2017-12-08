@@ -9,6 +9,17 @@
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>
     <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
+    <link rel="stylesheet" th:href="@{/css/topicList.css}"/>
+<style>
+    .list-item{
+        overflow: auto;
+        height: 60px;
+        word-wrap:break-word;
+    }
+    .item-button{
+        margin-left: 42%;
+    }
+</style>
 </head>
 <body>
 <!--列表，展示所有发布的课题，然后点击可以看到每个课题里面具体的学生的交流情况-->
@@ -26,19 +37,20 @@
             <h2 class="layui-colla-title" th:text="${topic.name}"></h2>
             <div class="layui-colla-content">
                 <!--两重循环-->
-                <div th:each="Id : ${stuList.keySet()}">
-                    <div th:each="selects: ${stuList.get(Id)}">
-                        <th:block th:if="${Id eq topic.topicId}" >
-                            <h2 th:text="${selects.studentId.name}"></h2>
-                            <div th:text="${selects.comment}"></div>
-                        </th:block>
-                    </div>
-                </div>
-                <hr/>
+                <!--<div th:each="Id : ${stuList.keySet()}">-->
+                    <!--<div th:each="selects: ${stuList.get(Id)}">-->
+                        <!--<th:block th:if="${Id eq topic.topicId}" >-->
+                            <!--<h2 th:text="${selects.studentId.name}"></h2>-->
+                            <!--<div th:text="${selects.comment}"></div>-->
+                        <!--</th:block>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<hr/>-->
                 <button class="btn btn-success">提交审核</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
-                <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>
+                <button class="btn btn-warning" onclick="editStudent()">更换毕设学生</button>
                 <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
+                <button class="btn btn-primary" th:onclick="'javascript:listSelect(\''+${topic.topicId}+'\');'">查看学生申请列表</button>
             </div>
         </div>
     </div>
@@ -75,6 +87,35 @@
         }, function(index){
             return 0
         });
+    }
+    function listSelect(topicId) {
+        $.get('/myth/teacher/ListSelectTopic/'+topicId, function (data) {
+            console.log(data)
+            tableData = ''
+            data.forEach(function (value) {
+                tableData +=  '<div class="layui-collapse">' +
+                    '<div class="layui-colla-item">' +
+                    '    <h2 class="layui-colla-title">' + value.studentId.name+' | '+value.studentId.classId.majorId.name+' | '+value.studentId.classId.name + '</h2>' +
+                    '    <div class="layui-colla-content">' +
+                    '          <div class="list-item">' + value.comment + '</div><br/>' +
+                    '          <button class="btn btn-primary item-button" onclick="selectTopic('+value.topicId+')">选择学生</button>' +
+                    '    </div>' +
+                    '  </div>' +
+                    '</div>'
+            })
+            layer.open({
+                type: 1,
+                area: ['700px', '500px'],
+                resize: false,
+                title: '请选择完成课题的学生',
+                content: tableData
+            })
+            layui.use(['element', 'layer'], function(){
+                var element = layui.element;
+                element.init();
+            });
+        })
+        
     }
 </script>
 </body>

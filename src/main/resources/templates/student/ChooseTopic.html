@@ -4,9 +4,8 @@
     <meta charset="UTF-8"/>
     <title>选课题</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-
     <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
-    <link rel="stylesheet" href="../css/topicList.css"/>
+    <link rel="stylesheet" th:href="@{/css/topicList.css}"/>
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}" ></script>
     <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
@@ -45,22 +44,25 @@
 </div>
 
 <hr/>
-<div class="pageBar">
-    <a href="student/ChooseTopic"><button>首页</button></a>
+<div id="pageBar">
+    <a th:href="@{/student/ChooseTopic}"><button>首页</button></a>
     <a th:href="@{/student/ChooseTopic/{id} (id=${pageNum}-2)}"><button>上一页</button></a>
-    <span th:text="${pageNum}"></span>
+    <span th:text="'第 '+${pageNum}+' 页'"></span>
     <th:block th:if="${pageNum lt pageTotal}" >
         <a th:href="@{/student/ChooseTopic/{id} (id=${pageNum})}"><button>下一页</button></a>
     </th:block>
     <a th:href="@{/student/ChooseTopic/{id} (id=${pageTotal}-1)}"><button>尾页</button></a>
-    <span th:text="'共'+${pageTotal}+'页'"></span>
+    <span th:text="'共 '+${pageTotal}+' 页'"></span>
 </div>
 
 
 
 <script>
+
     layui.use(['element', 'layer'], function(){
     });
+
+    $("#pageBar button").addClass('btn btn-primary')
 
     function selectTopic(topicId) {
         layer.open({
@@ -85,31 +87,6 @@
             }
         })
     }
-
-
-
-    // function editStudent() {
-    //     layer.open({
-    //         type: 1,
-    //         title: '更换学生',
-    //         area: ['500px', '300px'],
-    //         content: '<form><input name="studentId"/></form>'
-    //     })
-    // }
-    // function deleteTopic(topicId) {
-    //     layer.confirm('确实要删除课题吗？', {
-    //         btn: ['取消', '确认'] //可以无限个按钮
-    //         ,btn2: function(index, layero){
-    //             $.get('/myth/teacher/del/topic/'+topicId, function (data) {
-    //                 console.log(data)
-    //                 window.location.reload(true)
-    //             });
-    //             return 0
-    //         }
-    //     }, function(index){
-    //         return 0
-    //     });
-    // }
     function searchPage() {
         window.location.href = "/myth/student/SearchTopic";
     }

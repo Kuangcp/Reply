@@ -1,3 +1,5 @@
+// 登录页面的公共JS
+
 function readParamter(type) {
     var url = location.search;
     if (url.indexOf("?") !== -1) {

@@ -20,4 +20,8 @@ public class MainConfig {
     public String loginTypeAdmin;
     public int chooseTopicPageSize;
 
+    //因为课题topic是外键引用学生,所以刚开始要有一个缺省值 所以也就需要一个空的学生进来
+
+    public int defaultTopicStudentId;
+
 }

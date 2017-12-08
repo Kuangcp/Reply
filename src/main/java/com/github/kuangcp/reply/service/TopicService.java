@@ -3,6 +3,7 @@ package com.github.kuangcp.reply.service;
 import com.github.kuangcp.reply.dao.SelectTopicDao;
 import com.github.kuangcp.reply.dao.TopicDao;
 import com.github.kuangcp.reply.domain.SelectTopic;
+import com.github.kuangcp.reply.domain.Student;
 import com.github.kuangcp.reply.domain.Teacher;
 import com.github.kuangcp.reply.domain.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,13 @@ public class TopicService {
     public List<Topic> listTopicByTeacher(long teacherId){
         return topicDao.findAllByGuideId(new Teacher(teacherId));
     }
+
     public List<SelectTopic> listSelectTopicByTopic(long topicId){
         return selectTopicDao.findAllByTopicId(new Topic(topicId));
-
+    }
+    public SelectTopic findSelectTopic(long studentId, long topicId) {
+        Student student = new Student(studentId);
+        Topic topic = new Topic(topicId);
+        return selectTopicDao.findByStudentIdAndTopicId(student, topic);
     }
 }
