@@ -30,7 +30,7 @@ reply:
     loginTypeStu: student
     loginTypeTea: teacher
     loginTypeAdmin: admin
-    chooseTopicPageSize: 15
+    chooseTopicPageSize: 10
   weixin:
     token: 90
 # HTTPS 配置

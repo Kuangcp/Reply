@@ -6,18 +6,12 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css"/>
     <link rel="stylesheet" href="../layer/css/layui.css" media="all"/>
     <link rel="stylesheet" href="../css/topicList.css"/>
-<style>
-    .searchInput{
-        margin: 10px 20px 10px 30%;
-        width: 300px;
-    }
-</style>
 
 </head>
 <body>
 <div>
     <input class="searchInput" type="text" name="name" id="inputName" title="课题名字" />
-    <button type="button" onclick="query()" >搜索</button>
+    <button type="button" onclick="query()" class="btn btn-primary">搜索</button>
 </div>
 <div  id="topicList">
 
@@ -33,14 +27,13 @@
     enterSubmit("inputName", query)
 
     function query() {
-        // $("#topicList").html('')
         var name=$("#inputName").val()
         $.get("../student/ChooseTopic/q/0?name="+name, function (data) {
             // console.log(data)
             // console.log(data.content)
             resultList=''
             if(data.content.length === 0){
-                resultList='<h3>暂无相关课题</h3>';
+                resultList='<span class="none-title">暂无相关课题</span>';
             }else {
                 data.content.forEach(function (value) {
                     resultList = resultList + '<div class="layui-collapse">' +
@@ -48,10 +41,7 @@
                         '    <h2 class="layui-colla-title">' + value.name + '<i class="layui-icon layui-colla-icon"></i></h2>' +
                         '    <div class="layui-colla-content">' +
                         '          <div class="list-item">' + value.attention + '</div><br/>' +
-                        '          <button class="btn btn-success" onclick="selectTopic()">选择课题</button>' +
-                        '          <a ><button class="btn btn-primary">修改课题</button></a>' +
-                        '          <button class="btn btn-warning" onclick="editStudent()">修改已选题学生</button>' +
-                        // '          <button class="btn btn-danger" >删除课题</button>' +
+                        '          <button class="btn btn-primary item-button" onclick="selectTopic('+value.topicId+')">选择课题</button>' +
                         '    </div>' +
                         '  </div>' +
                         '</div>'
