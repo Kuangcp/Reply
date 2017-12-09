@@ -17,15 +17,17 @@
 <script>
     function showReply(topicId) {
         $.get('/myth/student/ReadReply/'+topicId, function (data) {
-            // console.log(data)
-            result = ''
-            teaName = data.topicId.guideId.name
-            if(data.reply == null){
-                result = teaName+'教师还没有回复'
-            }else if(data.reply === 1){
-                result = teaName+'教师同意了你的选题申请'
-            }else if(data.reply === 0){
-                result = teaName+'教师拒绝了你的申请, 并对你说'+data.replyComment
+            // console.log(data);
+            result = '';
+            teaName = data.topicId.guideId.name;
+            if(data.reply === 'null'){
+                result = teaName+' 教师暂无回复你的申请'
+            }else if(data.reply === '1'){
+                result = teaName+' 教师同意了你的申请, 并对你说: '+data.replyComment
+            }else if(data.reply === '0'){
+                result = teaName+' 教师拒绝了你的申请, 并对你说: '+data.replyComment
+            }else if(data.reply === '2'){
+                result = teaName+' 教师已经选了其他学生'
             }
             layer.msg(result)
         })

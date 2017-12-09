@@ -17,8 +17,13 @@ public class TopicServiceTest {
     @Autowired
     TopicService topicService;
 
+    // 测试选择通过学生
     @Test
     public void testSelect(){
         topicService.selectStudent(1L, 2L, "恭喜");
+    }
+    @Test
+    public void testReject(){
+        topicService.rejectStudent(1L, 2L, "你太丑了");
     }
 }

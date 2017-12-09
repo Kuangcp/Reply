@@ -58,8 +58,7 @@ public class TeacherController {
      */
     @RequestMapping("/DealTopic")
     public ModelAndView deal(HttpSession session){
-        long teacherId = (long) session.getAttribute("teacherId");
-        List<Topic> topicList = topicService.listTopicByTeacher(teacherId);
+        List<Topic> topicList = topicService.listTopicByTeacher(queryUtil.getTeacheId(session));
         ModelAndView view = new ModelAndView("teacher/DealTopic");
 //        Map<Long, List<SelectTopic>> studentList = new HashMap<>();
 //        for(Topic topic:topicList){
@@ -75,17 +74,17 @@ public class TeacherController {
     public List<SelectTopic>listTopic(@PathVariable("topicId")long topicId){
         return topicService.listSelectTopicByTopic(topicId);
     }
-    // TODO 同意学生选题请求,隐含着拒绝所有该课题其他请求,并存入topic表中
+    // TODO 同意学生选题请求,隐含着拒绝所有该课题其他请求,并存入topic表中 success fail
     @ResponseBody
     @RequestMapping("/selectStudent/{studentId}/{topicId}")
     public String selectStudent(@PathVariable("studentId") long studentId, @PathVariable("topicId")long topicId, String comment){
         return topicService.selectStudent(studentId, topicId, comment);
     }
-    // TODO 拒绝选题请求
+    // TODO 拒绝选题请求 success fail
     @ResponseBody
     @RequestMapping("/rejectStudent/{studentId}/{topicId}")
-    public String rejectStudent(@PathVariable("studentId") long studentId, @PathVariable("topicId")long topicId){
-        return topicService.rejectStudent(studentId, topicId);
+    public String rejectStudent(@PathVariable("studentId") long studentId, @PathVariable("topicId")long topicId, String comment){
+        return topicService.rejectStudent(studentId, topicId, comment);
     }
 
     @RequestMapping("/ThesisProposal")

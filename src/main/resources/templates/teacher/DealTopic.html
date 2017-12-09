@@ -16,8 +16,11 @@
         height: 60px;
         word-wrap:break-word;
     }
-    .item-button{
-        margin-left: 42%;
+    .item-select{
+        margin-left: 25%;
+    }
+    .item-reject{
+        margin-left: 120px;
     }
 </style>
 </head>
@@ -34,7 +37,7 @@
 <div th:each="topic:${topicList}">
     <div class="layui-collapse">
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title" th:text="${topic.name}"></h2>
+            <h2 class="layui-colla-title" th:inline="text">[[${topic.name}]] <span class="layui-badge" th:id="'topic'+${topic.topicId}" th:text="${topic.topicId}"></span> </h2>
             <div class="layui-colla-content">
                 <!--两重循环-->
                 <!--<div th:each="Id : ${stuList.keySet()}">-->
@@ -46,11 +49,11 @@
                     <!--</div>-->
                 <!--</div>-->
                 <!--<hr/>-->
-                <button class="btn btn-success">提交审核</button>
+                <button class="btn btn-primary">提交审核</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
-                <button class="btn btn-warning" onclick="editStudent()">更换毕设学生</button>
-                <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
                 <button class="btn btn-primary" th:onclick="'javascript:listSelect(\''+${topic.topicId}+'\');'">查看学生申请列表</button>
+                <button class="btn btn-danger" onclick="editStudent()">更换毕设学生</button>
+                <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
             </div>
         </div>
     </div>
@@ -58,15 +61,38 @@
 
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
+    // TODO 40行的ajax获取对应的申请数
+
     layui.use(['element', 'layer'], function(){
         var element = layui.element;
         var layer = layui.layer;
     });
-    function selectStudent(studentId) {
-        $.get('', function (data) {
-
-        })
+    function selectStudent(studentId, topicId, type) {
+        layer.prompt({
+            formType: 2,
+            title: '有什么要回复的吗？',
+            area: ['400px', '300px'] //自定义文本域宽高
+        }, function(value, index, elem){
+            url = '/myth/teacher/selectStudent/'+studentId+'/'+topicId+'?comment='+value;
+            if(type===0){
+                url='/myth/teacher/rejectStudent/'+studentId+'/'+topicId+'?comment='+value;
+            }
+            $.get(url, function (data) {
+                console.log(data)
+                switch(data){
+                    case 'success':
+                        layer.msg('回复成功');
+                        break;
+                    case 'fail':
+                        layer.msg('回复失败,请刷新重试');
+                        break;
+                }
+            })
+            layer.close(index);
+            layer.closeAll('tips');
+        });
     }
+
     function editStudent() {
         layer.open({
             type: 1,
@@ -89,15 +115,41 @@
     }
     function listSelect(topicId) {
         $.get('/myth/teacher/ListSelectTopic/'+topicId, function (data) {
-            console.log(data)
+            // console.log(data== '')
+
+            if(data == ''){
+                layer.msg('您已经确定好了学生 或者 暂时没有学生选该课题');
+                return 0
+            }
+            // if(data == 'Error'){
+            //     layer.msg('系统发生错误,请刷新重试');
+            //     return 0
+            // }
+            // console.log(data.length)
+            if(data.length == 0){
+                layer.msg('暂时没有学生选该课题');
+                return 0
+            }
             tableData = ''
             data.forEach(function (value) {
+                console.log(value)
+                status = ''
+                if(value.reply=='1'){
+                    status = '  <span class="layui-badge layui-bg-green">已通过申请</span>'
+                }else if(value.reply=='0' || value.reply=='2'){
+                    status = '  <span class="layui-badge ">已拒绝申请</span>'
+                }else{
+                    status = '  <span class="layui-badge layui-bg-gray">待处理</span>'
+                }
+
                 tableData +=  '<div class="layui-collapse">' +
                     '<div class="layui-colla-item">' +
-                    '    <h2 class="layui-colla-title">' + value.studentId.name+' | '+value.studentId.classId.majorId.name+' | '+value.studentId.classId.name + '</h2>' +
+                    '    <h2 class="layui-colla-title">' + value.studentId.name+' | '+value.studentId.classId.majorId.name+' | '+value.studentId.classId.name +
+                    ''+status+'</h2>' +
                     '    <div class="layui-colla-content">' +
                     '          <div class="list-item">' + value.comment + '</div><br/>' +
-                    '          <button class="btn btn-primary item-button" onclick="selectStudent('+value.studentId.studentId+')">选择学生</button>' +
+                    '          <button class="btn btn-primary item-select" onclick="selectStudent('+value.studentId.studentId+','+value.topicId.topicId+', 1)">选择学生</button>' +
+                    '          <button class="btn btn-danger item-reject" onclick="selectStudent('+value.studentId.studentId+','+value.topicId.topicId+', 0)">拒绝学生</button>' +
                     '    </div>' +
                     '  </div>' +
                     '</div>'

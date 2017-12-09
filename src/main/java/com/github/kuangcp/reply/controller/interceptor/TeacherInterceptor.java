@@ -19,7 +19,7 @@ public class TeacherInterceptor extends HandlerInterceptorAdapter {
         String path = request.getServletPath();
         HttpSession session = request.getSession();
         if(path.startsWith("/teacher") && !path.equals("/teacher/login")){
-            System.out.println(session.getAttribute("teacherId"));
+//            System.out.println(session.getAttribute("teacherId"));
             if(session.getAttribute("teacherId") == null){
                 request.getRequestDispatcher("/teacher/login").forward(request, response);
             }
