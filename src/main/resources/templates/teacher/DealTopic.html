@@ -61,12 +61,12 @@
     layui.use(['element', 'layer'], function(){
         var element = layui.element;
         var layer = layui.layer;
-
-        //监听折叠
-//         element.on('collapse(test)', function(data){
-// //            layer.msg('展开状态：'+ data.show);
-//         });
     });
+    function selectStudent(studentId) {
+        $.get('', function (data) {
+
+        })
+    }
     function editStudent() {
         layer.open({
             type: 1,
@@ -81,8 +81,7 @@
                 $.get('/myth/teacher/del/topic/'+topicId, function (data) {
                     console.log(data)
                     window.location.reload(true)
-                })
-                return 0
+                });return 0
             }
         }, function(index){
             return 0
@@ -98,7 +97,7 @@
                     '    <h2 class="layui-colla-title">' + value.studentId.name+' | '+value.studentId.classId.majorId.name+' | '+value.studentId.classId.name + '</h2>' +
                     '    <div class="layui-colla-content">' +
                     '          <div class="list-item">' + value.comment + '</div><br/>' +
-                    '          <button class="btn btn-primary item-button" onclick="selectTopic('+value.topicId+')">选择学生</button>' +
+                    '          <button class="btn btn-primary item-button" onclick="selectStudent('+value.studentId.studentId+')">选择学生</button>' +
                     '    </div>' +
                     '  </div>' +
                     '</div>'

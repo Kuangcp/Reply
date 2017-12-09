@@ -28,7 +28,7 @@ public class SelectTopic {
     private Topic topicId;
     private String comment;//注释
 
-    private String reply;// 是否通过申请 1  0
+    private String reply;// 1/0 是否通过申请 2已经选择了别人
     private String replyComment;
 
     // 快速新增
