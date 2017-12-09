@@ -68,19 +68,24 @@ public class TeacherController {
 //        view.addObject("stuList", studentList);
         return view;
     }
-    // 列出所有的列表
+    // 列出所有的列表 TODO 没有人选 和已经选了
     @ResponseBody
     @RequestMapping("/ListSelectTopic/{topicId}")
     public List<SelectTopic>listTopic(@PathVariable("topicId")long topicId){
         return topicService.listSelectTopicByTopic(topicId);
     }
-    // TODO 同意学生选题请求,隐含着拒绝所有该课题其他请求,并存入topic表中 success fail
+    @ResponseBody
+    @RequestMapping("/SelectNum/{topicId}")
+    public int getSelectNum(@PathVariable("topicId") long topicId){
+        return topicService.getTopicSelectNum(topicId);
+    }
+    // 同意学生选题请求,隐含着拒绝所有该课题其他请求,并存入topic表中 success fail
     @ResponseBody
     @RequestMapping("/selectStudent/{studentId}/{topicId}")
     public String selectStudent(@PathVariable("studentId") long studentId, @PathVariable("topicId")long topicId, String comment){
         return topicService.selectStudent(studentId, topicId, comment);
     }
-    // TODO 拒绝选题请求 success fail
+    // 拒绝选题请求 success fail
     @ResponseBody
     @RequestMapping("/rejectStudent/{studentId}/{topicId}")
     public String rejectStudent(@PathVariable("studentId") long studentId, @PathVariable("topicId")long topicId, String comment){

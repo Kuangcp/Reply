@@ -26,4 +26,11 @@ public class TopicServiceTest {
     public void testReject(){
         topicService.rejectStudent(1L, 2L, "你太丑了");
     }
+
+    @Test
+    public void testSelectNum(){
+        int result = topicService.getTopicSelectNum(2L);
+        System.out.println(result);
+
+    }
 }

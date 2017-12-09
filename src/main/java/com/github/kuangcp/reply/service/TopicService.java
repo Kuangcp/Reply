@@ -32,23 +32,19 @@ public class TopicService {
     }
 
     /**
-     * 查询某topic所有的学生申请,一旦有申请通过的,就不返回数据,返回null
+     * 列出课题已选的学生数量
+     * @return
+     */
+    public int getTopicSelectNum(long topicId){
+        return selectTopicDao.accountSelectNum(new Topic(topicId));
+    }
+
+    /**
+     * 查询某topic所有的学生申请
      * @param topicId  课题
      * @return list or nul
      */
     public List<SelectTopic> listSelectTopicByTopic(long topicId){
-//        List<SelectTopic> list = selectTopicDao.findAllByTopicId(new Topic(topicId));
-        //        if(list!=null) {
-//            for (SelectTopic selectTopic : list) {
-//                if ("1".equals(selectTopic.getReply())) {
-//                    return null;
-//                }
-                // 会出现并发异常
-//                if ("2".equals(selectTopic.getReply()) || "0".equals(selectTopic.getReply())) {
-//                    list.remove(selectTopic);
-//                }
-//            }
-//        }
         return selectTopicDao.findAllByTopicId(new Topic(topicId));
     }
     public SelectTopic findSelectTopic(long studentId, long topicId) {

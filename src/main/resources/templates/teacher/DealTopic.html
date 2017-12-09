@@ -61,7 +61,17 @@
 
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
-    // TODO 40行的ajax获取对应的申请数
+    var idList = $(".layui-badge");
+    /*<![CDATA[*/
+    for(var i=0; i<idList.length;i++){
+        $.get('/myth/teacher/SelectNum/'+$(idList[i]).html(), function (data) {
+            console.log(data)
+            // TODO 修改不了?
+            $(idList[i]).html(data)
+        })
+        // console.log($(idList[i]).html())
+    }
+    /*]]>*/
 
     layui.use(['element', 'layer'], function(){
         var element = layui.element;

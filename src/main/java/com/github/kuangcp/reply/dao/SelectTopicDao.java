@@ -28,4 +28,7 @@ public interface SelectTopicDao extends JpaRepository<SelectTopic, Long>{
     @Modifying
     @Query(value = "update select_topic set reply='0', reply_comment=?3 where topic_id=?1 and student_id=?2", nativeQuery = true)
     int rejectStudent(long topicId, long studentId, String comment);
+
+    @Query("select count(s.selectId) from SelectTopic s where s.topicId=?1")
+    int accountSelectNum(Topic topicId);
 }
