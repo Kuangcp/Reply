@@ -57,7 +57,7 @@ public class StudentService {
      */
     public Page<Topic> listTopicByName(int page, int size, String name){
         Pageable pageable = new PageRequest(page, size);
-        return topicDao.listTopicByName(name, pageable);
+        return topicDao.listTopicByName(name,new Student(mainConfig.defaultTopicStudentId), pageable);
     }
     // 选题
     public String saveSelect(long studentId, long topicId, String comment){

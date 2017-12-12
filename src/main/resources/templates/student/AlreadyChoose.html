@@ -17,11 +17,11 @@
 <script>
     function showReply(topicId) {
         $.get('/myth/student/ReadReply/'+topicId, function (data) {
-            // console.log(data);
+            console.log(data.reply);
             result = '';
             teaName = data.topicId.guideId.name;
-            if(data.reply === 'null'){
-                result = teaName+' 教师暂无回复你的申请'
+            if(data.reply == null){
+                result = teaName+' 教师还没回复你的申请'
             }else if(data.reply === '1'){
                 result = teaName+' 教师同意了你的申请, 并对你说: '+data.replyComment
             }else if(data.reply === '0'){

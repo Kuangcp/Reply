@@ -37,7 +37,7 @@
 <div th:each="topic:${topicList}">
     <div class="layui-collapse">
         <div class="layui-colla-item">
-            <h2 class="layui-colla-title" th:inline="text">[[${topic.name}]] <span class="layui-badge" th:id="'topic'+${topic.topicId}" th:text="${topic.topicId}"></span> </h2>
+            <h2 class="layui-colla-title" th:inline="text">[[${topic.name}]] <span class="selectNum" th:data="${topic.topicId}"></span> </h2>
             <div class="layui-colla-content">
                 <!--两重循环-->
                 <!--<div th:each="Id : ${stuList.keySet()}">-->
@@ -61,15 +61,25 @@
 
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
-    var idList = $(".layui-badge");
+
+    function getNum(spanNum){
+        // console.log(spanNum.attr('data'))
+        $.get('/myth/teacher/SelectNum/'+spanNum.attr('data'), function (data) {
+            // console.log(data)
+            if(data == 0){
+                spanNum.html('')
+                spanNum.attr('class','')
+            }else{
+                spanNum.html(data)
+                spanNum.attr('class','layui-badge')
+            }
+
+        })
+    }
+    var idList = $(".selectNum");
     /*<![CDATA[*/
     for(var i=0; i<idList.length;i++){
-        $.get('/myth/teacher/SelectNum/'+$(idList[i]).html(), function (data) {
-            console.log(data)
-            // TODO 修改不了?
-            $(idList[i]).html(data)
-        })
-        // console.log($(idList[i]).html())
+        getNum($(idList[i]))
     }
     /*]]>*/
 
@@ -99,7 +109,8 @@
                 }
             })
             layer.close(index);
-            layer.closeAll('tips');
+            layer.closeAll();
+
         });
     }
 
@@ -115,7 +126,7 @@
             btn: ['取消', '确认'] //可以无限个按钮
             ,btn2: function(index, layero){
                 $.get('/myth/teacher/del/topic/'+topicId, function (data) {
-                    console.log(data)
+                    // console.log(data)
                     window.location.reload(true)
                 });return 0
             }
@@ -127,7 +138,7 @@
         $.get('/myth/teacher/ListSelectTopic/'+topicId, function (data) {
             // console.log(data== '')
 
-            if(data == ''){
+            if(data === ''){
                 layer.msg('您已经确定好了学生 或者 暂时没有学生选该课题');
                 return 0
             }
@@ -142,27 +153,31 @@
             }
             tableData = ''
             data.forEach(function (value) {
-                console.log(value)
+                // console.log(value)
                 status = ''
+                btnStatus = ' disabled="disabled" '
                 if(value.reply=='1'){
                     status = '  <span class="layui-badge layui-bg-green">已通过申请</span>'
                 }else if(value.reply=='0' || value.reply=='2'){
                     status = '  <span class="layui-badge ">已拒绝申请</span>'
                 }else{
-                    status = '  <span class="layui-badge layui-bg-gray">待处理</span>'
+                    status = '  <span class="layui-badge layui-bg-blue">待处理</span>'
+                    btnStatus = ' '
                 }
-
+                /*<![CDATA[*/
+                console.log(btnStatus)
                 tableData +=  '<div class="layui-collapse">' +
                     '<div class="layui-colla-item">' +
                     '    <h2 class="layui-colla-title">' + value.studentId.name+' | '+value.studentId.classId.majorId.name+' | '+value.studentId.classId.name +
                     ''+status+'</h2>' +
                     '    <div class="layui-colla-content">' +
                     '          <div class="list-item">' + value.comment + '</div><br/>' +
-                    '          <button class="btn btn-primary item-select" onclick="selectStudent('+value.studentId.studentId+','+value.topicId.topicId+', 1)">选择学生</button>' +
-                    '          <button class="btn btn-danger item-reject" onclick="selectStudent('+value.studentId.studentId+','+value.topicId.topicId+', 0)">拒绝学生</button>' +
+                    '          <button '+btnStatus+' class="btn btn-primary item-select " onclick="selectStudent('+value.studentId.studentId+','+value.topicId.topicId+', 1)"  >选择学生</button>' +
+                    '          <button '+btnStatus+' class="btn btn-danger item-reject " onclick="selectStudent('+value.studentId.studentId+','+value.topicId.topicId+', 0)"  >拒绝学生</button>' +
                     '    </div>' +
                     '  </div>' +
                     '</div>'
+                /*]]>*/
             })
             layer.open({
                 type: 1,

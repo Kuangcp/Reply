@@ -16,7 +16,8 @@ import java.util.List;
  * @author kuangcp
  */
 public interface SelectTopicDao extends JpaRepository<SelectTopic, Long>{
-    List<SelectTopic> findAllByTopicId(Topic topic);
+
+    List<SelectTopic> findAllByTopicIdAndStudentIdIsNot(Topic topic, Student studentId);
     SelectTopic findByStudentIdAndTopicId(Student studentId, Topic topicId);
     List<SelectTopic> findAllByStudentId(Student student);
 
@@ -29,6 +30,6 @@ public interface SelectTopicDao extends JpaRepository<SelectTopic, Long>{
     @Query(value = "update select_topic set reply='0', reply_comment=?3 where topic_id=?1 and student_id=?2", nativeQuery = true)
     int rejectStudent(long topicId, long studentId, String comment);
 
-    @Query("select count(s.selectId) from SelectTopic s where s.topicId=?1")
-    int accountSelectNum(Topic topicId);
+    @Query("select count(s.selectId) from SelectTopic s where s.topicId=?1 and s.studentId <> ?2")
+    int accountSelectNum(Topic topicId, Student studentId);
 }

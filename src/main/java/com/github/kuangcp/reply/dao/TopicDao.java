@@ -19,11 +19,17 @@ public interface TopicDao extends JpaRepository<Topic, Long>{
 
     List<Topic> findAllByGuideId(Teacher guideId);
 
-    @Query(value = "select t from Topic t where t.studentId <> ?1")
+    /**
+     * 列出没有被确定好的题目 学生id非默认
+     * @param studentId 默认学生的Id
+     * @param pageable
+     * @return
+     */
+    @Query(value = "select t from Topic t where t.studentId = ?1")
     Page<Topic> listTopic(Student studentId, Pageable pageable);
-
-    @Query("select t from Topic t where t.name like %?1%")
-    Page<Topic> listTopicByName(String name, Pageable pageable);
+    // 没有选好学生的才会出现
+    @Query("select t from Topic t where t.name like %?1% and t.studentId = ?2")
+    Page<Topic> listTopicByName(String name, Student studentId, Pageable pageable);
 
 
 }

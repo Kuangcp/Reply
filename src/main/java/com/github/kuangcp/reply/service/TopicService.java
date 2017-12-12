@@ -1,5 +1,6 @@
 package com.github.kuangcp.reply.service;
 
+import com.github.kuangcp.reply.config.bean.MainConfig;
 import com.github.kuangcp.reply.dao.SelectTopicDao;
 import com.github.kuangcp.reply.dao.TopicDao;
 import com.github.kuangcp.reply.domain.SelectTopic;
@@ -22,6 +23,8 @@ import java.util.List;
 public class TopicService {
 
     @Autowired
+    MainConfig mainConfig;
+    @Autowired
     private TopicDao topicDao;
     @Autowired
     private SelectTopicDao selectTopicDao;
@@ -36,7 +39,7 @@ public class TopicService {
      * @return
      */
     public int getTopicSelectNum(long topicId){
-        return selectTopicDao.accountSelectNum(new Topic(topicId));
+        return selectTopicDao.accountSelectNum(new Topic(topicId), new Student(mainConfig.defaultTopicStudentId));
     }
 
     /**
@@ -45,7 +48,7 @@ public class TopicService {
      * @return list or nul
      */
     public List<SelectTopic> listSelectTopicByTopic(long topicId){
-        return selectTopicDao.findAllByTopicId(new Topic(topicId));
+        return selectTopicDao.findAllByTopicIdAndStudentIdIsNot(new Topic(topicId), new Student(mainConfig.defaultTopicStudentId));
     }
     public SelectTopic findSelectTopic(long studentId, long topicId) {
         Student student = new Student(studentId);
@@ -54,7 +57,7 @@ public class TopicService {
     }
 
     /**
-     * 选择某学生,拒绝其他学生
+     * 选择某学生,拒绝其他学生,并修改入Topic课题表
      * @param studentId
      * @param topicId
      * @param comment
@@ -67,7 +70,10 @@ public class TopicService {
         if(result!=null) {
             result.setReply("1");
             result.setReplyComment(comment);
-            log.info(topic.getName() + " 拒绝其他选择学生:" + selectTopicDao.rejectOther(topicId) + "个");
+            Topic topicOrigin = topicDao.findOne(topicId);
+            topicOrigin.setStudentId(student);
+            topicDao.save(topicOrigin);
+            log.info(topicOrigin.getName() + " 拒绝其他选择学生:" + selectTopicDao.rejectOther(topicId) + "个");
             selectTopicDao.save(result);
             return "success";
         }else{
