@@ -45,6 +45,7 @@ public class StudentController {
         return "/student/login";
     }
 
+    // 页面跳转进入的数据填充
     //page 0开始 size 页大小
     @RequestMapping("/ChooseTopic")
     public ModelAndView ChooseTopicInit(){
@@ -53,6 +54,13 @@ public class StudentController {
     @RequestMapping("/ChooseTopic/{page}")
     public ModelAndView ChooseTopic(@PathVariable("page") int page){
         return choosePage(page);
+    }
+    // 查询课题进行选题
+    @ResponseBody
+    @RequestMapping("/ChooseTopic/q/{page}")
+    public Page<Topic> queryTopic(@PathVariable("page") int page, String name){
+        name = name.replace(' ', '%');
+        return studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
     }
     @ResponseBody
     @RequestMapping("/AlreadyChoose/a")
@@ -64,15 +72,7 @@ public class StudentController {
     public SelectTopic readReply(@PathVariable("topicId") long topicId, HttpSession session){
         return topicService.findSelectTopic(queryUtil.getStudentId(session), topicId);
     }
-
-    //查询
-    @ResponseBody
-    @RequestMapping("/ChooseTopic/q/{page}")
-    public Page<Topic> queryTopic(@PathVariable("page") int page, String name){
-        name = name.replace(' ', '%');
-        return studentService.listTopicByName(page, mainConfig.chooseTopicPageSize, name);
-    }
-    //选题
+    //学生选题
     @ResponseBody
     @RequestMapping("/ChooseTopic/s/{topicId}")
     public String choose(@PathVariable("topicId") long topicId, String comment, HttpSession session){
