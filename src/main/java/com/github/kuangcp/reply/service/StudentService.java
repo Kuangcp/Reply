@@ -59,11 +59,17 @@ public class StudentService {
         Pageable pageable = new PageRequest(page, size);
         return topicDao.listTopicByName(name,new Student(mainConfig.defaultTopicStudentId), pageable);
     }
-    // 选题
+
+    /**
+     * 学生选题 判断是否有选题,然后回复相应的消息
+     * @return Already/id 已经选了一个题目/选题成功
+     */
     public String saveSelect(long studentId, long topicId, String comment){
         Student student = new Student(studentId);
         Topic topic = new Topic(topicId);
-        SelectTopic selectTopic = selectTopicDao.findByStudentIdAndTopicId(student, topic);
+        // 更改选题机制,由原先的限制重复提交改成了只能选一个题目
+        //        SelectTopic selectTopic = selectTopicDao.findByStudentIdAndTopicId(student, topic);
+        SelectTopic selectTopic = selectTopicDao.findByStudentId(student);
         if(selectTopic!=null){
             return "Already";
         }else{

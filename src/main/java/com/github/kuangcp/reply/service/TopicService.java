@@ -73,7 +73,7 @@ public class TopicService {
             Topic topicOrigin = topicDao.findOne(topicId);
             topicOrigin.setStudentId(student);
             topicDao.save(topicOrigin);
-            log.info(topicOrigin.getName() + " 拒绝其他选择学生:" + selectTopicDao.rejectOther(topicId) + "个");
+//            log.info(topicOrigin.getName() + " 拒绝其他选择学生:" + selectTopicDao.rejectOther(topicId) + "个");
             selectTopicDao.save(result);
             return "success";
         }else{

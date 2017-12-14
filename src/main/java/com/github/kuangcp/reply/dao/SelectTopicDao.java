@@ -19,6 +19,7 @@ public interface SelectTopicDao extends JpaRepository<SelectTopic, Long>{
 
     List<SelectTopic> findAllByTopicIdAndStudentIdIsNot(Topic topic, Student studentId);
     SelectTopic findByStudentIdAndTopicId(Student studentId, Topic topicId);
+    SelectTopic findByStudentId(Student studentId);
     List<SelectTopic> findAllByStudentId(Student student);
 
     @Transactional

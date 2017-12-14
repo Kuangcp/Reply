@@ -17,7 +17,7 @@
 <body>
 
 <th:block th:if="${#lists.size(topicList) == 0}" >
-    <div style="font-size: 18px; margin: 100px 0 0 20%;">
+    <div class="none-title">
         暂无课题，请等待教师发布课题<br/>
     </div>
 </th:block>
@@ -81,7 +81,7 @@
             if('Fail' === data){
                 layer.msg('选题失败,请刷新页面重试')
             }else if('Already' === data){
-                layer.msg('你已经选了该课题')
+                layer.msg('你已经选了一个课题')
             }else{
                 layer.msg('选题成功，请等待对应教师回复')
             }

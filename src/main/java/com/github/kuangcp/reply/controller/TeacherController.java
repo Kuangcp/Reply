@@ -54,7 +54,7 @@ public class TeacherController {
     }
 
     /**
-     * 展示课题
+     * 教师处理课题页面
      */
     @RequestMapping("/DealTopic")
     public ModelAndView deal(HttpSession session){
@@ -68,7 +68,7 @@ public class TeacherController {
 //        view.addObject("stuList", studentList);
         return view;
     }
-    // 列出所有的列表 TODO 没有人选 和已经选了
+    // 列出所有的列表 只是没有选的
     @ResponseBody
     @RequestMapping("/ListSelectTopic/{topicId}")
     public List<SelectTopic>listTopic(@PathVariable("topicId")long topicId){

@@ -72,16 +72,14 @@ public class StudentController {
     public SelectTopic readReply(@PathVariable("topicId") long topicId, HttpSession session){
         return topicService.findSelectTopic(queryUtil.getStudentId(session), topicId);
     }
-    //学生选题
+    //学生选题 返回: Already failed id 表示: 已经选 失败 成功
     @ResponseBody
     @RequestMapping("/ChooseTopic/s/{topicId}")
     public String choose(@PathVariable("topicId") long topicId, String comment, HttpSession session){
         String result = studentService.saveSelect(queryUtil.getStudentId(session), topicId, comment);
         if(result==null || "".equals(result)){
             return mainConfig.loginFail;
-        }else if("Already".equals(result)){
-            return "Already";
-        }else {
+        }else{
             return result;
         }
     }
