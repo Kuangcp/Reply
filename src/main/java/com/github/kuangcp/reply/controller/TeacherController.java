@@ -89,10 +89,9 @@ public class TeacherController {
     }
     // 删除对应的课题的学生,重置为默认即可,然后继续让学生选,省的麻烦
     @ResponseBody
-    @RequestMapping("/transStudent/{topicId}")
-    public String transStudent(@PathVariable("topicId")String topicId){
-
-        return "df";
+    @RequestMapping("/resetStudent/{topicId}")
+    public String resetStudent(@PathVariable("topicId")long topicId){
+        return topicService.resetStudent(topicId);
     }
 
 

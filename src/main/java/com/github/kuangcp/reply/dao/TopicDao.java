@@ -6,7 +6,9 @@ import com.github.kuangcp.reply.domain.Topic;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,7 +34,9 @@ public interface TopicDao extends JpaRepository<Topic, Long>{
     @Query("select t from Topic t where t.name like %?1% and t.studentId = ?2 and t.topicId not in (select topicId from SelectTopic)")
     Page<Topic> listTopicByName(String name, Student studentId, Pageable pageable);
 
-
-    @Query("update Topic t set t.studentId=?1 where t.topicId=?2")
-    String resetTopic(Student student, Topic topic);
+    // 将已经选好了学生的课题重置回默认值
+    @Modifying
+    @Transactional
+    @Query(value = "update topic t set t.student_id=?1 where t.topic_id=?2", nativeQuery = true)
+    int resetTopic(long student, long topic);
 }

@@ -90,7 +90,7 @@ public class TopicService {
         }
     }
     // 更换学生,就是重置学生 TODO 测试
-    public String teansStudent(Long topicId){
-        return topicDao.resetTopic(new Student(mainConfig.defaultTopicStudentId), new Topic(topicId));
+    public String resetStudent(Long topicId){
+        return topicDao.resetTopic(mainConfig.defaultTopicStudentId, topicId)+"";
     }
 }

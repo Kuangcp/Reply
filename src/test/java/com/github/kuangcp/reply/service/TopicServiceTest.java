@@ -33,4 +33,10 @@ public class TopicServiceTest {
         System.out.println(result);
 
     }
+
+    @Test
+    public void testReset(){
+        String result = topicService.resetStudent(2L);
+        System.out.println(result);
+    }
 }
