@@ -60,12 +60,7 @@ public class TeacherController {
     public ModelAndView deal(HttpSession session){
         List<Topic> topicList = topicService.listTopicByTeacher(queryUtil.getTeacheId(session));
         ModelAndView view = new ModelAndView("teacher/DealTopic");
-//        Map<Long, List<SelectTopic>> studentList = new HashMap<>();
-//        for(Topic topic:topicList){
-//            studentList.put(topic.getTopicId(), topicService.listSelectTopicByTopic(topic.getTopicId()));
-//        }
         view.addObject("topicList", topicList);
-//        view.addObject("stuList", studentList);
         return view;
     }
     // 列出所有的列表 只是没有选的
@@ -74,6 +69,7 @@ public class TeacherController {
     public List<SelectTopic>listTopic(@PathVariable("topicId")long topicId){
         return topicService.listSelectTopicByTopic(topicId);
     }
+    // 获取选题学生数量
     @ResponseBody
     @RequestMapping("/SelectNum/{topicId}")
     public int getSelectNum(@PathVariable("topicId") long topicId){
@@ -91,6 +87,14 @@ public class TeacherController {
     public String rejectStudent(@PathVariable("studentId") long studentId, @PathVariable("topicId")long topicId, String comment){
         return topicService.rejectStudent(studentId, topicId, comment);
     }
+    // 删除对应的课题的学生,重置为默认即可,然后继续让学生选,省的麻烦
+    @ResponseBody
+    @RequestMapping("/transStudent/{topicId}")
+    public String transStudent(@PathVariable("topicId")String topicId){
+
+        return "df";
+    }
+
 
     @RequestMapping("/ThesisProposal")
     public String ThesisProposal(){

@@ -28,17 +28,17 @@
                     '    <div class="layui-colla-content">' +
                     '          <div class="list-item">' + value.topicId.attention + '</div><br/>' +
                     '          <button class="btn btn-primary showReply" data-id="'+value.topicId.topicId+'">查看教师回复</button>' +
-                    '          <button class="btn btn-danger cancelSelect"  data-id="'+value.topicId.topicId+'">取消选择</button>' +
+                    // '          <button class="btn btn-danger cancelSelect"  data-id="'+value.topicId.topicId+'">取消选择</button>' +
                     '    </div>' +
                     '  </div>' +
                     '</div>'
             })
         }
         $("#topicList").html(resultList);//将上面拼接的HTML进行插入
-        $(".cancelSelect").on('click', function () {
-            var id = $(this).data('id');
-            console.log(id)
-        });
+        // $(".cancelSelect").on('click', function () {
+        //     var id = $(this).data('id');
+        //     console.log(id)
+        // });
         $(".showReply").on('click', function () {
             var topicId = $(this).data('id');
             $.get('/myth/student/ReadReply/'+topicId, function (data) {

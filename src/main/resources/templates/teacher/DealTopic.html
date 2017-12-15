@@ -2,36 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
-    <!--<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>-->
-    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" crossorigin="anonymous"/>-->
+    <title>处理课题</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <script th:src="@{/js/jquery.min.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <!--<script th:src="@{/js/bootstrap.min.js}"></script>-->
     <link rel="stylesheet" th:href="@{/layer/css/layui.css}"  media="all"/>
     <link rel="stylesheet" th:href="@{/css/topicList.css}"/>
-<style>
-    .list-item{
-        overflow: auto;
-        height: 60px;
-        word-wrap:break-word;
-    }
-    .item-select{
-        margin-left: 25%;
-    }
-    .item-reject{
-        margin-left: 120px;
-    }
-</style>
+    <style>
+        .list-item{
+            overflow: auto;
+            height: 60px;
+            word-wrap:break-word;
+        }
+        .item-select{
+            margin-left: 25%;
+        }
+        .item-reject{
+            margin-left: 120px;
+        }
+    </style>
 </head>
 <body>
 <!--列表，展示所有发布的课题，然后点击可以看到每个课题里面具体的学生的交流情况-->
-<!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">-->
-    <!--<legend>常规折叠</legend>-->
-<!--</fieldset>-->
 <th:block th:if="${#lists.size(topicList) == 0}" >
     <div style="font-size: 18px; margin: 100px 0 0 20%;">
-        没有保存的课题，请到发布页面进行编辑发布<br/><a href="PublishTopic.html"><button class="btn btn-primary">点击前往</button></a>
+        没有保存的课题，请到发布页面进行编辑发布<br/>
+        <a href="PublishTopic.html"><button class="btn btn-primary">点击前往</button></a>
     </div>
 </th:block>
 <div th:each="topic:${topicList}">
@@ -39,33 +35,33 @@
         <div class="layui-colla-item">
             <h2 class="layui-colla-title" th:inline="text">[[${topic.name}]] <span class="selectNum" th:data="${topic.topicId}"></span> </h2>
             <div class="layui-colla-content">
-                <!--两重循环-->
-                <!--<div th:each="Id : ${stuList.keySet()}">-->
-                    <!--<div th:each="selects: ${stuList.get(Id)}">-->
-                        <!--<th:block th:if="${Id eq topic.topicId}" >-->
-                            <!--<h2 th:text="${selects.studentId.name}"></h2>-->
-                            <!--<div th:text="${selects.comment}"></div>-->
-                        <!--</th:block>-->
-                    <!--</div>-->
-                <!--</div>-->
-                <!--<hr/>-->
                 <button class="btn btn-primary">提交审核</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
                 <button class="btn btn-primary" th:onclick="'javascript:listSelect(\''+${topic.topicId}+'\');'">查看学生申请列表</button>
-                <button class="btn btn-danger" onclick="editStudent()">更换毕设学生</button>
+                <button class="btn btn-danger transStudent" th:data="${topic.topicId}">更换毕设学生</button>
                 <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
             </div>
         </div>
     </div>
 </div>
-
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
+    $(".transStudent").on('click', function () {
+        var id = $(this).attr('data')
+        console.log(id)
+        $.get('/myth/teacher/SelectNum/', function (data) {
 
+        })
+        layer.open({
+            type: 1,
+            title: '更换学生',
+            content: '<form><input name="studentId"/> <input onkeyup="this.value=this.value.replace(/\\D/g,\'\')"' +
+            '    onafterpaste="this.value=this.value.replace(/\\D/g,\'\')"></form>'
+        })
+    })
+    // 获取该课题的选题人数数量
     function getNum(spanNum){
-        // console.log(spanNum.attr('data'))
         $.get('/myth/teacher/SelectNum/'+spanNum.attr('data'), function (data) {
-            // console.log(data)
             if(data == 0){
                 spanNum.html('')
                 spanNum.attr('class','')
@@ -73,7 +69,6 @@
                 spanNum.html(data)
                 spanNum.attr('class','layui-badge')
             }
-
         })
     }
     var idList = $(".selectNum");
@@ -98,7 +93,7 @@
                 url='/myth/teacher/rejectStudent/'+studentId+'/'+topicId+'?comment='+value;
             }
             $.get(url, function (data) {
-                console.log(data)
+                // console.log(data)
                 switch(data){
                     case 'success':
                         layer.msg('回复成功');
@@ -112,14 +107,6 @@
             layer.closeAll();
 
         });
-    }
-
-    function editStudent() {
-        layer.open({
-            type: 1,
-            title: '更换学生',
-            content: '<form><input name="studentId"/></form>'
-        })
     }
     function deleteTopic(topicId) {
         layer.confirm('确实要删除课题吗？', {
@@ -137,15 +124,10 @@
     function listSelect(topicId) {
         $.get('/myth/teacher/ListSelectTopic/'+topicId, function (data) {
             // console.log(data== '')
-
             if(data === ''){
                 layer.msg('您已经确定好了学生 或者 暂时没有学生选该课题');
                 return 0
             }
-            // if(data == 'Error'){
-            //     layer.msg('系统发生错误,请刷新重试');
-            //     return 0
-            // }
             // console.log(data.length)
             if(data.length == 0){
                 layer.msg('暂时没有学生选该课题');
@@ -191,7 +173,6 @@
                 element.init();
             });
         })
-        
     }
 </script>
 </body>

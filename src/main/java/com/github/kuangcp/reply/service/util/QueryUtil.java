@@ -26,4 +26,14 @@ public class QueryUtil {
     public long getAdminId(HttpSession session){
         return (long) session.getAttribute("adminId");
     }
+
+//    public long checkId(String id){
+//        Long result;
+//        try{
+//            result = Long.parseLong(id);
+//        }catch (Exception e){
+//            return -1;
+//        }
+//        return result;
+//    }
 }

@@ -33,4 +33,6 @@ public interface TopicDao extends JpaRepository<Topic, Long>{
     Page<Topic> listTopicByName(String name, Student studentId, Pageable pageable);
 
 
+    @Query("update Topic t set t.studentId=?1 where t.topicId=?2")
+    String resetTopic(Student student, Topic topic);
 }
