@@ -33,4 +33,8 @@ public interface SelectTopicDao extends JpaRepository<SelectTopic, Long>{
 
     @Query("select count(s.selectId) from SelectTopic s where s.topicId=?1 and s.studentId <> ?2")
     int accountSelectNum(Topic topicId, Student studentId);
+
+    @Transactional
+    @Modifying
+    int deleteByTopicId(Topic topicId);
 }

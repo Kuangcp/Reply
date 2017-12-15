@@ -89,8 +89,10 @@ public class TopicService {
             return "success";
         }
     }
-    // 更换学生,就是重置学生 TODO 测试
+    // 更换学生,就是重置学生
     public String resetStudent(Long topicId){
+        int result = selectTopicDao.deleteByTopicId(new Topic(topicId));
+        log.info("删除选题记录: topic:"+topicId+", 行数: "+result);
         return topicDao.resetTopic(mainConfig.defaultTopicStudentId, topicId)+"";
     }
 }

@@ -34,6 +34,7 @@ public class TopicServiceTest {
 
     }
 
+    // 测试重置课题的选题
     @Test
     public void testReset(){
         String result = topicService.resetStudent(2L);

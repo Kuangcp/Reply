@@ -38,7 +38,7 @@
                 <button class="btn btn-primary">提交审核</button>
                 <a th:href="@{/teacher/editTopic/{topic} (topic=${topic.topicId})}"><button class="btn btn-primary">修改课题</button></a>
                 <button class="btn btn-primary" th:onclick="'javascript:listSelect(\''+${topic.topicId}+'\');'">查看学生申请列表</button>
-                <button class="btn btn-danger transStudent" th:data="${topic.topicId}">更换毕设学生</button>
+                <button class="btn btn-danger transStudent" th:data="${topic.topicId}">取消该已选学生</button>
                 <button class="btn btn-danger" th:onclick="'javascript:deleteTopic(\''+${topic.topicId}+'\');'">删除课题</button>
             </div>
         </div>
@@ -46,7 +46,6 @@
 </div>
 <script th:src="@{/layer/layui.js}" charset="utf-8"></script>
 <script>
-
     function deleteTopic(topicId) {
         layer.confirm('确实要删除课题吗？', {
             btn: ['取消', '确认'] //可以无限个按钮
@@ -60,7 +59,6 @@
             return 0
         });
     }
-    // TODO 还要删除掉SelectTopic中的选题记录
     $(".transStudent").on('click', function () {
         var id = $(this).attr('data')
         console.log(id)
@@ -68,7 +66,6 @@
             btn: ['取消', '确认'] //可以无限个按钮
             ,btn2: function(index, layero){
                 $.get('/myth/teacher/resetStudent/'+id, function (data) {
-                    // console.log(data)
                     window.location.reload(true)
                 });return 0
             }
