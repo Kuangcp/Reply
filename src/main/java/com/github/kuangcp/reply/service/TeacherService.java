@@ -29,7 +29,6 @@ public class TeacherService{
     @Autowired
     private TeacherDao teacherDao;
 
-
     //教师发布课题
     public Topic saveTopic(Topic topic, long teacherId){
         topic.setGuideId(new Teacher(teacherId));

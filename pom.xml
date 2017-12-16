@@ -87,6 +87,17 @@
 			<artifactId>activiti-spring-boot-starter-basic</artifactId>
 			<version>6.0.0</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+        </dependency>
         <!--<dependency>-->
 			<!--<groupId>org.springframework.security</groupId>-->
 			<!--<artifactId>spring-security-test</artifactId>-->
