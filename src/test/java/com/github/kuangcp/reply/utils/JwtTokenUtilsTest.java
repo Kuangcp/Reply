@@ -1,10 +1,8 @@
 package com.github.kuangcp.reply.utils;
 
 import org.junit.Test;
-import sun.misc.BASE64Decoder;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by https://github.com/kuangcp on 17-12-16  下午11:29
@@ -14,10 +12,11 @@ import java.util.Arrays;
 public class JwtTokenUtilsTest {
 
     @Test
-    public void testCreateToken() throws IOException {
+    public void testCreateToken() throws InterruptedException {
         String result = JwtTokenUtils.createToken("userId");
         System.out.println(result);
-        System.out.println(Arrays.toString(new BASE64Decoder().decodeBuffer(result)));
+        Thread.sleep(2000);
+
         result = JwtTokenUtils.verifyToken(result, "userId");
         System.out.println(result);
     }

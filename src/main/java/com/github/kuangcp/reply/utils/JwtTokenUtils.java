@@ -22,6 +22,7 @@ public class JwtTokenUtils {
     public static final String VERIFY_FAIL = "VERIFY_FAIL";
     public static final String VERIFY_SUCCESS = "VERIFY_SUCCESS";
     public static final SimpleDateFormat smf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    // 过期时间的设置,过期后Token就会失效
     private static long EXPIRE_WEEK = 1000 * 60 * 60 * 24 * 7;
     private static long EXPIRE_DAY = 1000 * 60 * 60 * 24;
 
