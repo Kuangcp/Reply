@@ -14,6 +14,7 @@ import java.util.Date;
 /**
  * Created by https://github.com/kuangcp on 17-12-16  下午11:20
  * 默认采用HS256加密,将JWT的三段数据格式,去除掉第一部分,减轻传输压力
+ * 增加角色字段
  * @author kuangcp
  */
 public class JwtTokenUtils {
@@ -42,6 +43,7 @@ public class JwtTokenUtils {
             token = JWT.create()
                     .withIssuer(userId)
                     .withExpiresAt(date)
+//                    .wi
                     .sign(algorithm);
         } catch (UnsupportedEncodingException | JWTCreationException exception) {
             return CREATE_FAIL;

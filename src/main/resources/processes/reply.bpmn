@@ -3,13 +3,8 @@
   <process id="PushActiviti" isClosed="false" isExecutable="true" processType="None">
     <documentation id="PushActiviti_D_1"><![CDATA[论文答辩流程]]></documentation>
     <startEvent id="sid-FA47F299-F4EE-4C13-9DC0-E22E8F1E54AD"/>
-    <userTask activiti:exclusive="true" id="RespondentDivide" name="答辩分组"/>
     <userTask activiti:exclusive="true" id="PublishTopic" name="发布课题"/>
-    <sequenceFlow id="sid-1A08C119-5E5A-4F6F-8549-7B4DE5CA6F1A" name="提交课题" sourceRef="RespondentDivide" targetRef="PublishTopic"/>
-    <sequenceFlow id="sid-78E27882-03A6-43CC-8AE5-9506ECC13164" name="答辩分组" sourceRef="sid-FA47F299-F4EE-4C13-9DC0-E22E8F1E54AD" targetRef="RespondentDivide"/>
-    <userTask activiti:exclusive="true" id="sid-A62357CA-1C20-47FF-87A6-902F788B7254" name="专家组审批"/>
     <userTask activiti:exclusive="true" id="sid-BD9C341F-60D1-4710-886F-D232207FE2E9" name="学生选题"/>
-    <sequenceFlow id="sid-4D57D094-392A-4B61-8B63-83C27BE2DB10" name="发布课题" sourceRef="sid-A62357CA-1C20-47FF-87A6-902F788B7254" targetRef="sid-BD9C341F-60D1-4710-886F-D232207FE2E9"/>
     <userTask activiti:exclusive="true" id="sid-F6D3684A-E57C-4E15-A555-DB6025118A08" name="教师审核学生选题"/>
     <userTask activiti:exclusive="true" id="sid-EA8943E6-32C2-4011-93E7-E4B95BD17725" name="答辩教师审核一稿"/>
     <userTask activiti:exclusive="true" id="sid-CC582AAA-614F-4C6A-8F30-48332ED43290" name="学生接收一辩结果"/>
@@ -35,7 +30,6 @@
     <sequenceFlow id="_11" name="进行二辩" sourceRef="sid-46B35A39-D41C-44EA-A7B4-9D3B9C10BD20" targetRef="sid-E1012B5E-FBEE-469E-A627-7D473D32A8F7">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pass=='true'}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="_8" sourceRef="PublishTopic" targetRef="sid-A62357CA-1C20-47FF-87A6-902F788B7254"/>
     <sequenceFlow id="_9" sourceRef="sid-BD9C341F-60D1-4710-886F-D232207FE2E9" targetRef="sid-F6D3684A-E57C-4E15-A555-DB6025118A08"/>
     <sequenceFlow id="_10" name="重选" sourceRef="sid-F6D3684A-E57C-4E15-A555-DB6025118A08" targetRef="sid-BD9C341F-60D1-4710-886F-D232207FE2E9">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pass=='false'}]]></conditionExpression>
@@ -47,6 +41,8 @@
     <sequenceFlow id="_15" name="重写" sourceRef="sid-EA8943E6-32C2-4011-93E7-E4B95BD17725" targetRef="_7">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${pass=='false'}]]></conditionExpression>
     </sequenceFlow>
+    <sequenceFlow id="_2" name="答辩分组" sourceRef="sid-FA47F299-F4EE-4C13-9DC0-E22E8F1E54AD" targetRef="PublishTopic"/>
+    <sequenceFlow id="_12" sourceRef="PublishTopic" targetRef="sid-BD9C341F-60D1-4710-886F-D232207FE2E9"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#FFFFFF;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="PushActiviti">
@@ -56,20 +52,8 @@
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="RespondentDivide" id="Shape-RespondentDivide">
-        <omgdc:Bounds height="80.0" width="100.0" x="550.5" y="0.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="80.0" width="100.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="PublishTopic" id="Shape-PublishTopic">
         <omgdc:Bounds height="80.0" width="100.0" x="375.0" y="0.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="80.0" width="100.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="sid-A62357CA-1C20-47FF-87A6-902F788B7254" id="Shape-sid-A62357CA-1C20-47FF-87A6-902F788B7254">
-        <omgdc:Bounds height="80.0" width="100.0" x="210.5" y="0.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="80.0" width="100.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
@@ -135,6 +119,13 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_12" id="BPMNEdge__12" sourceElement="PublishTopic" targetElement="sid-BD9C341F-60D1-4710-886F-D232207FE2E9">
+        <omgdi:waypoint x="375.0" y="40.0"/>
+        <omgdi:waypoint x="145.0" y="40.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_15" id="BPMNEdge__15" sourceElement="sid-EA8943E6-32C2-4011-93E7-E4B95BD17725" targetElement="_7">
         <omgdi:waypoint x="115.0" y="470.0"/>
         <omgdi:waypoint x="115.0" y="425.0"/>
@@ -151,27 +142,6 @@
           <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-4D57D094-392A-4B61-8B63-83C27BE2DB10" id="BPMNEdge_sid-4D57D094-392A-4B61-8B63-83C27BE2DB10" sourceElement="sid-A62357CA-1C20-47FF-87A6-902F788B7254" targetElement="sid-BD9C341F-60D1-4710-886F-D232207FE2E9">
-        <omgdi:waypoint x="211.0" y="40.0"/>
-        <omgdi:waypoint x="145.0" y="40.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-78E27882-03A6-43CC-8AE5-9506ECC13164" id="BPMNEdge_sid-78E27882-03A6-43CC-8AE5-9506ECC13164" sourceElement="sid-FA47F299-F4EE-4C13-9DC0-E22E8F1E54AD" targetElement="RespondentDivide">
-        <omgdi:waypoint x="746.0" y="41.0"/>
-        <omgdi:waypoint x="651.0" y="40.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sid-1A08C119-5E5A-4F6F-8549-7B4DE5CA6F1A" id="BPMNEdge_sid-1A08C119-5E5A-4F6F-8549-7B4DE5CA6F1A" sourceElement="RespondentDivide" targetElement="PublishTopic">
-        <omgdi:waypoint x="551.0" y="40.0"/>
-        <omgdi:waypoint x="475.0" y="40.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sid-95FB8848-2E21-45AF-89C1-C1565512134D" id="BPMNEdge_sid-95FB8848-2E21-45AF-89C1-C1565512134D" sourceElement="sid-6150D058-67F6-406D-A9EE-C1BAB3FB942D" targetElement="sid-A0F1F5AF-6BB2-40B7-AE7E-383D8B238C40">
         <omgdi:waypoint x="730.0" y="495.0"/>
         <omgdi:waypoint x="790.0" y="491.0"/>
@@ -185,6 +155,13 @@
         <omgdi:waypoint x="545.0" y="325.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="0.0" width="-17.0" x="0.0" y="10.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_2" id="BPMNEdge__2" sourceElement="sid-FA47F299-F4EE-4C13-9DC0-E22E8F1E54AD" targetElement="PublishTopic">
+        <omgdi:waypoint x="746.0" y="41.0"/>
+        <omgdi:waypoint x="475.0" y="40.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="sid-EA8943E6-32C2-4011-93E7-E4B95BD17725" targetElement="sid-E1012B5E-FBEE-469E-A627-7D473D32A8F7">
@@ -217,13 +194,6 @@
         <omgdi:waypoint x="630.0" y="500.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_8" id="BPMNEdge__8" sourceElement="PublishTopic" targetElement="sid-A62357CA-1C20-47FF-87A6-902F788B7254">
-        <omgdi:waypoint x="375.0" y="40.0"/>
-        <omgdi:waypoint x="311.0" y="40.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="sid-BD9C341F-60D1-4710-886F-D232207FE2E9" targetElement="sid-F6D3684A-E57C-4E15-A555-DB6025118A08">

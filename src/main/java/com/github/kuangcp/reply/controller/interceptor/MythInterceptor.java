@@ -21,6 +21,7 @@ public class MythInterceptor extends HandlerInterceptorAdapter{
         request.setAttribute("startTime",startTime);
         String path = request.getServletPath();
         HttpSession session = request.getSession();
+        // 如果有注销登录,就将Session中的对应参数移除掉
         if (path.contains("logout")){
             String[] result = path.split("/");
 //            System.out.println(result[0]+":"+result[1]);
