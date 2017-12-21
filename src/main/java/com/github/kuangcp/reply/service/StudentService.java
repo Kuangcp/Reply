@@ -22,7 +22,7 @@ import java.util.List;
  * @author kuangcp
  */
 @Service
-public class StudentService {
+public class StudentService  {
 
     @Autowired
     MainConfig mainConfig;

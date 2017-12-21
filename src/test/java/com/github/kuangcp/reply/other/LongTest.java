@@ -37,7 +37,6 @@ public class LongTest {
         }
     }
 
-
     // 对比表明 Lamda表达式性能要差一些,但是语法简单,但是!域内只能用final变量?
     @Test
     public void testMap(){
@@ -46,6 +45,7 @@ public class LongTest {
         for(int i=0; i<900000;i++){
             map.put(i+"", i);
         }
+        int r  = 0;
         map.forEach((k,v)->{
             int result = v*10;
         });
