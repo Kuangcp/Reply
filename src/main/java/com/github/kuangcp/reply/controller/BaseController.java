@@ -33,15 +33,16 @@ public class BaseController {
 
     @RequestMapping("/")
     public String index1(){
-        return "/index";
-    }@RequestMapping("/index")
+        return "index";
+    }
+    @RequestMapping("/index")
     public String index2(){
-        return "/index";
+        return "index";
     }
 
     @RequestMapping("/login")
     public String login(){
-        return "/login";
+        return "login";
     }
 
     /**
@@ -93,6 +94,6 @@ public class BaseController {
     }
     @RequestMapping("/logout/{type}")
     public String logout(@PathVariable("type")String type){
-        return "/index";
+        return "index";
     }
 }

@@ -20,7 +20,7 @@ public class StudentInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         if(path.startsWith("/student") && !path.equals("/student/login")){
             if(session.getAttribute("studentId") == null){
-                request.getRequestDispatcher("/student/login").forward(request, response);
+                request.getRequestDispatcher("student/login").forward(request, response);
             }
         }
         return true;

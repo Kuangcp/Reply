@@ -1,5 +1,7 @@
 package com.github.kuangcp.reply.controller;
 
+import com.github.kuangcp.reply.service.test.InitDataService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +15,15 @@ public class Hi {
     @RequestMapping("/hi")
     public String hi(){
         return "Springboot 1.5.6";
+    }
+
+
+    @Autowired
+    InitDataService initDataService;
+    @RequestMapping("/initData")
+    public String initData(){
+        initDataService.init();
+        return "SUCCESS";
     }
 
 //    @GetMapping("/wx")

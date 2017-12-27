@@ -2,7 +2,6 @@
 spring:
   profiles:
     active: dev # 配置文件切换
-
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
   jpa:
@@ -13,6 +12,13 @@ spring:
       enabled: true
   jackson:
     serialization: true
+
+  mustache:
+    enabled: true
+    prefix: classpath:/templates/
+    view-names: .html
+
+
 
 # 服务器配置
 server:
