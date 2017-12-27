@@ -6,7 +6,7 @@
 	<groupId>com.github.kuangcp</groupId>
 	<artifactId>reply</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>reply</name>
 	<description>Graduation Reply</description>
