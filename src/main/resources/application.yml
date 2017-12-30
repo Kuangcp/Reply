@@ -9,14 +9,9 @@ spring:
       ddl-auto: update
   mvc:
     favicon:
-      enabled: true
+      enabled: false
   jackson:
     serialization: true
-
-  mustache:
-    enabled: true
-    prefix: classpath:/templates/
-    view-names: .html
 
 
 
